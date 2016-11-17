@@ -1,0 +1,1 @@
+app-editors/vim X -acl cscope -debug gpm lua -minimal perl python 

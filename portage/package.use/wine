@@ -1,0 +1,1 @@
+app-emulation/wine X -alsa -capi -cups -d3d9 -dos -fontconfig -gecko -gstreamer jpeg -ldap -mp3 -ncurses -netapi -odbc -openal -opencl -opengl -osmesa -oss -pcap -perl -pipelight png prelink -pulseaudio -realtime run-exes -s3tc -samba -scanner -ssl -staging -themes truetype -udisks -xml 

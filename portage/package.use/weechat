@@ -1,0 +1,1 @@
+net-irc/weechat alias charset exec fifo irc logger nls perl python relay scripts spell ssl trigger xfer -doc -guile lua  

@@ -1,0 +1,1 @@
+media-sound/pulseaudio alsa alsa-plugin -bluetooth -doc -ipv6 -neon -systemd udev dbus -xen equalizer qt4

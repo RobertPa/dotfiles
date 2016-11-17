@@ -1,0 +1,1 @@
+app-laptop/tlp tlp_suggests -rdw pm-utils tpacpi-bundled -laptop-mode-tools
