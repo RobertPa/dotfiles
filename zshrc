@@ -43,6 +43,7 @@ source $ZSH/oh-my-zsh.sh
 #########
 #helpers#
 #########
+alias ss='eval `slmenu < .progs.txt`'
 alias tpeon='sudo sysctl -w kernel.grsecurity.tpe=1'
 alias tpeoff='sudo sysctl -w kernel.grsecurity.tpe=0'
 alias tmpfson='sudo mount -o remount,size=2G /var/tmp/portage'
@@ -61,7 +62,7 @@ alias wifi='sudo ip link set wlp3s0'
 #################
 #basics commands#
 #################
-alias rm='gvfs-trash'
+alias rm='trash -v'
 #alias sudo='pkexec --user root'
 alias e='exit'
 alias vi='vim'
@@ -79,6 +80,7 @@ alias f='ranger'
 alias we='wget'
 alias gcc='gcc -Wall -std=gnu99'
 alias mkdir='mkdir -pv'
+alias vi='emacsclient -t'
 ##############
 #Init Systems#
 ##############
@@ -93,6 +95,8 @@ alias mkdir='mkdir -pv'
 #alias mask='sudo systemctl mask'
 #alias unmask='sudo systemctl unmask'
 #openrc
+ alias journal='[ -f /usr/sbin/journalctl ] && journalctl -r || sudo vim /var/log/syslog'
+alias service='sudo rc-service'
 ##############
 #applications#
 ##############
@@ -170,6 +174,10 @@ google () {
     /usr/bin/w3m -F $u
 }
 
+function weather() {
+curl -s http://wttr.in/"${1}" \
+        | less -R -E -X
+}
 
 function extract {
     if [ -f "$1" ] ; then
