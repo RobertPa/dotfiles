@@ -1,0 +1,1 @@
+www-client/chromium -cups -gnome-keyring -hangouts -neon pic proprietary-codecs pulseaudio suid -widevine 
