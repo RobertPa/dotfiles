@@ -1,10 +1,10 @@
 let g:pathogen_disabled = [ 'vim-better-whitespace' ]
-if has("gui_running")
-    set lines=42  columns=82
-endif
+"if has("gui_running")
+    " GUI is running or is about to start.
+    " Maximize gvim window (for an alternative on Windows, see simalt below).
+    "set lines=42  columns=82
+"endif
 execute pathogen#infect()
-
-colorscheme Tomorrow-Night-Eighties 
 nmap <silent> <S-Up> :wincmd k<CR>
 nmap <silent> <S-Down> :wincmd j<CR>
 nmap <silent> <S-Left> :wincmd h<CR>
@@ -12,6 +12,7 @@ nmap <silent> <S-Right> :wincmd l<CR>
 se title
 filetype plugin indent on
 set number
+colorscheme Tomorrow-Night-Eighties 
 let mapleader = "\<Space>"
 set mouse=n
 syntax on
@@ -191,15 +192,15 @@ vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
   "hi CursorLine   ctermbg=darkgrey
   "hi CursorColumn  ctermbg=darkgrey
 
+let g:airline_theme='badwolf'
 
-
-  let g:lightline = {
-              \ 'colorscheme': 'PaperColor_dark',
-              \ 'component_function': {
-              \ 'filetype': 'MyFiletype',
-              \ 'fileformat': 'MyFileformat',
-              \}
-              \}
+ """ let g:lightline = {
+   """           \ 'colorscheme': 'PaperColor_dark',
+""              \ 'component_function': {
+ ""             \ 'filetype': 'MyFiletype',
+  ""            \ 'fileformat': 'MyFileformat',
+   ""           \}
+    ""          \}
 
 
   map <leader><leader>a :Assembly<CR>
