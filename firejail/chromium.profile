@@ -4,7 +4,6 @@ noblacklist ~/.cache/chromium
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 
-blacklist /data
 netfilter
 
 whitelist ${DOWNLOADS}

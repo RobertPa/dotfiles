@@ -1,1 +1,1 @@
-app-emulation/qemu -accessibility aio alsa -bluetooth caps -curl -debug fdt filecaps gnutls gtk infiniband jpeg lzo ncurses nfs numa opengl pin-upstream-blobs  png pulseaudio python -rbd sasl spice xattr -xen virgl usb usbredir threads 
+app-emulation/qemu -accessibility aio alsa -bluetooth caps -curl -debug fdt filecaps gnutls gtk infiniband jpeg lzo ncurses nfs numa opengl pin-upstream-blobs  png python -rbd sasl spice xattr -xen virgl usb usbredir threads 

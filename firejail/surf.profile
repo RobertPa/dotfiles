@@ -1,6 +1,6 @@
 noblacklist ${HOME}/.surf
-noblacklist /opt/surf-0.6/
 noblacklist ${HOME}/.surf/bookmarks
+whitelist ${HOME}/.surf/bookmarks
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
@@ -13,8 +13,6 @@ noroot
 protocol unix,inet,inet6,netlink
 seccomp
 tracelog
-
-blacklist /data
 whitelist ${HOME}/.surf/
 include /etc/firejail/whitelist-common.inc
 
