@@ -46,8 +46,6 @@ source $ZSH/oh-my-zsh.sh
 alias ss='eval `slmenu < .progs.txt`'
 alias tpeon='sudo sysctl -w kernel.grsecurity.tpe=1'
 alias tpeoff='sudo sysctl -w kernel.grsecurity.tpe=0'
-alias tmpfson='sudo mount -o remount,size=2G /var/tmp/portage'
-alias tmpfsoff='(sudo rm /var/tmp/portage/*; sudo mount -o remount,size=1M /var/tmp/portage)'
 alias update-grub='grub-mkconfig -o /boot/grub/grub.cfg'
 alias paxflags='sudo setfattr -n user.pax.flags -v m'
 #alias clearram='sudo sh -c "sync; echo 3 > /proc/sys/vm/drop_caches"'
@@ -80,7 +78,7 @@ alias f='ranger'
 alias we='wget'
 alias gcc='gcc -Wall -std=gnu99'
 alias mkdir='mkdir -pv'
-alias vi='emacsclient -t'
+alias uptime='uptime -p'
 ##############
 #Init Systems#
 ##############
