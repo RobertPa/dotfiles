@@ -12,7 +12,7 @@ nmap <silent> <S-Right> :wincmd l<CR>
 se title
 filetype plugin indent on
 set number
-colorscheme Tomorrow-Night-Eighties 
+colorscheme Tomorrow-Night-Eighties
 let mapleader = "\<Space>"
 set mouse=n
 syntax on
@@ -45,7 +45,7 @@ set number!
 set relativenumber!
 hi CursorLineNr ctermfg=blue
 set incsearch
-execute "set colorcolumn=" . join(range(81,335), ',')
+"execute "set colorcolumn=" . join(range(81,335), ',')
 cmap w!! w !sudo tee > /dev/null %"
 nmap <Leader><Leader> V
 vmap v <Plug>(expand_region_expand)
@@ -194,13 +194,13 @@ vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 
 let g:airline_theme='badwolf'
 
- """ let g:lightline = {
-   """           \ 'colorscheme': 'PaperColor_dark',
-""              \ 'component_function': {
- ""             \ 'filetype': 'MyFiletype',
-  ""            \ 'fileformat': 'MyFileformat',
-   ""           \}
+""  let g:lightline = {
+ ""             \ 'colorscheme': 'PaperColor_dark',
+ ""             \ 'component_function': {
+  ""            \ 'filetype': 'MyFiletype',
+   ""          \ 'fileformat': 'MyFileformat',
     ""          \}
+     ""         \}
 
 
   map <leader><leader>a :Assembly<CR>
@@ -211,7 +211,8 @@ let g:airline_theme='badwolf'
 
 
   command! -nargs=* Assembly call Assembly()
-  function! MyFiletype()
+
+function! MyFiletype()
       return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
   endfunction
 

@@ -25,7 +25,7 @@ fi
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 export TERMINAL='st'
-export BROWSER='surf'
+export BROWSER='/usr/bin/chromium'
 
 # DISABLE_AUTO_TITLE="true"
 # ENABLE_CORRECTION="true"
@@ -68,6 +68,7 @@ alias sudo='sudo '
 alias free='free -h'
 alias df='df -Th --total'
 #alias ls='ls -FX --color=always'
+alias ls='ls -h --color  --group-directories-first'
 #alias scan='sudo wifi-menu'
 alias cp='cp -i'
 alias hig='history | grep'
@@ -106,8 +107,9 @@ alias de='trans en:de'
 alias fran='trans en:fr'
 alias russ='trans en:russ'
 alias eng='trans de:en'
-alias yv='youtube-viewer'
+alias yv='youtube-viewer -C'
 alias ice='subuser run iceweasel'
+alias ytmp3='youtube-dl --extract-audio --audio-format mp3 --prefer-ffmpeg'
 ################
 #packagemanager#
 ################
@@ -202,4 +204,6 @@ function extract {
         echo "'$1' - file does not exist"
     fi
 }
+
+bindkey -s '^o' '/usr/local/bin/fsh'
 
