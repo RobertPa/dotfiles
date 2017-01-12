@@ -16,8 +16,8 @@ static const Bool foreground    = True;
  * then the current position is changed + newposition. If npisrelative
  * is False, then newposition is an absolute position.
  */
-static int  newposition   = 0;
-static Bool npisrelative  = False;
+static int  newposition   = 1;
+static Bool npisrelative  = True;
 
 #define SETPROP(p) { \
 	.v = (char *[]){ "/bin/sh", "-c", \
@@ -30,9 +30,9 @@ static Bool npisrelative  = False;
 #define MODKEY ControlMask
 static Key keys[] = { \
 	/* modifier                     key        function        argument */
-	{ MODKEY|ShiftMask,             XK_Return, focusonce,      { 0 } },
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          { 0 } },
-	{ MODKEY|ShiftMask,                       XK_t,      spawn,          SETPROP("_TABBED_SELECT_TAB") },
+	{ MODKEY,                       XK_Return, focusonce,      { 0 } },
+	{ MODKEY,                       XK_Return, spawn,          { 0 } },
+	{ MODKEY|ShiftMask,             XK_t,      spawn,          SETPROP("_TABBED_SELECT_TAB") },
 
 	{ MODKEY,                       XK_k,      rotate,         { .i = +1 } },
 	{ MODKEY,                       XK_j,      rotate,         { .i = -1 } },

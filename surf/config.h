@@ -7,7 +7,7 @@ static char *styledir       = "~/.surf/styles/";
 static char *cachefolder    = "~/.surf/cache/";
 
 static Bool kioskmode       = FALSE; /* Ignore shortcuts */
-static Bool showindicators  = TRUE;  /* Show indicators in window title */
+static Bool showindicators  = FALSE;  /* Show indicators in window title */
 static Bool zoomto96dpi     = TRUE;  /* Zoom pages to always emulate 96dpi */
 static Bool runinfullscreen = FALSE; /* Run in fullscreen mode by default */
 
@@ -48,7 +48,7 @@ static Bool allowgeolocation      = TRUE;
 #define SETPROP(p, q) { \
 	.v = (char *[]){ "/bin/sh", "-c", \
                    "prop=\"`(xprop -id $2 $0 | cut -d '\"' -f 2 | xargs -0 printf %b && " \
-                   "cat ~/.surf/bookmarks) | dmenu`\" &&" \
+                   "cat ~/.surf/bookmarks) | dmenu -l 10`\" &&" \
 	     	     "xprop -id $2 -f $1 8s -set $1 \"$prop\"", \
 	     p, q, winid, NULL \
 	} \
