@@ -7,8 +7,8 @@ export HISTFILESIZE=5000
 #umask =
 ZSH_THEME="af-magic"
 
-plugins=(git sudo colorize colored-man docker common-aliases \
-    battery web-search zsh-syntax-highlighting)
+plugins=(git sudo colorize colored-man docker \
+     copyfile zsh-syntax-highlighting)
 
 export PATH="/usr/local/sbin:/usr/local/bin:/bin:/usr/bin:/usr/sbin:/usr/lib/plan9/bin"
 
@@ -25,7 +25,7 @@ fi
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 export TERMINAL='st'
-export BROWSER='/usr/bin/chromium'
+export BROWSER='surf'
 
 # DISABLE_AUTO_TITLE="true"
 # ENABLE_CORRECTION="true"
@@ -56,10 +56,13 @@ alias xmod='setxkbmap -option 'ctrl:nocaps' && xmodmap ~/.Xmodmap'
 alias psg='ps aux | grep -v grep | grep -i -e VSZ -e'
 alias psc='ps xawf -eo pid,user,cgroup,args'
 alias h='xbacklight -set'
-alias wifi='sudo ip link set wlp3s0'
-#################
-#basics commands#
-#################
+alias wifi='sudo ip link set wlan0'
+alias a='abduco'
+alias ac='abduco -cf'
+alias aa='abduco -a'
+#########
+#basics #
+#########
 alias rm='trash -v'
 #alias sudo='pkexec --user root'
 alias e='exit'
@@ -80,6 +83,7 @@ alias we='wget'
 alias gcc='gcc -Wall -std=gnu99'
 alias mkdir='mkdir -pv'
 alias uptime='uptime -p'
+alias mpv='abduco -cf mpv mpv'
 ##############
 #Init Systems#
 ##############
@@ -101,15 +105,15 @@ alias service='sudo rc-service'
 ##############
 #alias hn='/opt/hnwatch'
 #alias weather='~/.go/bin/wego'
-#alias yt='mpsyt'
+alias yt='abduco -cf youtube youtube-dl'
 alias rtv='firejail rtv'
 alias de='trans en:de'
 alias fran='trans en:fr'
 alias russ='trans en:russ'
 alias eng='trans de:en'
-alias yv='youtube-viewer -C'
-alias ice='subuser run iceweasel'
+alias yv='abduco -c yv youtube-viewer -C'
 alias ytmp3='youtube-dl --extract-audio --audio-format mp3 --prefer-ffmpeg'
+alias newsbeuter='abduco -c news newsbeuter'
 ################
 #packagemanager#
 ################
@@ -125,12 +129,12 @@ alias ytmp3='youtube-dl --extract-audio --audio-format mp3 --prefer-ffmpeg'
 #gentoo-emerge
 alias search='emerge --search'
 alias ssearch='emerge -S'
-alias install='sudo emerge --ask'
+alias install='sudo emerge --ask --verbose'
 alias remove='sudo emerge -cav'
 alias update1='emerge --ask --update --ask @world'
 alias update2='emerge --ask --update --deep @world'
 alias update3='emerge --ask --update --deep --with-bdeps=y @world'
-alias update4='sudo emerge --ask --update --deep --with-bdeps=y --newuse @world'
+alias update4='sudo emerge --verbose --ask --update --deep --with-bdeps=y --newuse @world'
 #equery
 alias eqf='equery f'
 alias equ='equery u'
@@ -168,15 +172,24 @@ test -f "$tempfile" &&
     rm -f -- "$tempfile"
 }
 
+function hh() {
+    CMD=$(history | dmenu -l 50 | awk '{ print substr($0, index($0,$2)) }')
+    eval $CMD
+}
+
 google () {
     u=`perl -MURI::Escape -wle 'print "http://google.com/search?q=".
     uri_escape(join " ",  @ARGV)' $@`
     /usr/bin/w3m -F $u
 }
 
-function weather() {
+function wttr() {
 curl -s http://wttr.in/"${1}" \
         | less -R -E -X
+}
+
+function eqfb () {
+    eqf $@ | grep bin
 }
 
 function extract {
@@ -206,4 +219,3 @@ function extract {
 }
 
 bindkey -s '^o' '/usr/local/bin/fsh'
-
