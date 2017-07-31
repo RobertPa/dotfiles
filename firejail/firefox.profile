@@ -14,7 +14,7 @@ protocol unix,inet,inet6,netlink
 seccomp
 tracelog
 
-whitelist ${DOWNLOADS}
+#whitelist ${DOWNLOADS}
 mkdir ~/.mozilla
 whitelist ~/.mozilla
 mkdir ~/.cache/mozilla/firefox
@@ -31,11 +31,11 @@ whitelist ~/.cache/gnome-mplayer/plugin
 whitelist ~/.pki
 
 # lastpass, keepassx
-whitelist ~/.keepassx
-whitelist ~/.config/keepassx
-whitelist ~/keepassx.kdbx
-whitelist ~/.lastpass
-whitelist ~/.config/lastpass
+#whitelist ~/.keepassx
+#whitelist ~/.config/keepassx
+#whitelist ~/keepassx.kdbx
+#whitelist ~/.lastpass
+#whitelist ~/.config/lastpass
 
 
 #silverlight

@@ -1,0 +1,50 @@
+! These are all possible options, presented with default values.
+! xst will fallback to st.option if st.option is not present.
+! see src/config.h for more information about option meanings.
+
+! These options only take effect on startup.
+st.termname:     xterm-256color
+! if you do not set shell, precedence is: -e arg, utmp option, SHELL env var, /etc/passwd shell
+st.shell:        /bin/fish
+
+! The following options options can be reloaded via USR1 signal.
+!st.font:        Roboto Mono for Powerline:pixelsize=14:antialias=true:autohint=true;
+st.font:         Fira Mono for Powerline:Regular:pixelsize=15:antialias=true:autohint=true;
+st.borderpx:    2
+! Available cursor values: 2 4 6 7 = █ _ | ☃ ( 1 3 5 are blinking versions)
+st.cursorshape:  2
+st.cursorthickness:  2
+st.cursorblinkstyle: 0
+st.cursorblinkontype: 1
+st.bold_font:    0
+st.xfps:         120
+st.actionfps:    30
+st.chscale:      1.0
+st.cwscale:      1.0
+st.blinktimeout: 800
+st.bellvolume:   100
+! this is a char that is exposed like so: `printf '\033[z'`
+st.prompt_char:  $
+
+! opacity==255 means what terminal will be not transparent, 0 - fully transparent
+st.opacity:      255
+! Defaults taken from base16-twilight st.colorscheme.
+st.foreground:   #CEDBCA
+st.background:   #151B1A
+
+st.color0:       #2E2B38
+st.color1:       #991414
+st.color2:       #7A8C54
+st.color3:       #9E6438
+st.color4:       #55839E
+st.color5:       #9D916B
+st.color6:       #536556
+st.color7:       #828181
+st.color8:       #161717
+st.color9:       #A86D56
+st.color10:      #9FB274
+st.color11:      #B29F5E
+st.color12:      #507A91
+st.color13:      #B89855
+st.color14:      #7E9982
+st.color15:      #E3E3D1

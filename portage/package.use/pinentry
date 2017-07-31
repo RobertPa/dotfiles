@@ -1,2 +1,1 @@
-app-crypt/pinentry -gnome-keyring
-
+app-crypt/pinentry -qt4

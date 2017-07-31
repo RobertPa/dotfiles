@@ -15,3 +15,6 @@ noroot
 nogroups
 nosound
 shell none
+
+private-bin zathura
+private-dev

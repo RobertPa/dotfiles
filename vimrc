@@ -1,61 +1,62 @@
 let g:pathogen_disabled = [ 'vim-better-whitespace' ]
-"if has("gui_running")
-    " GUI is running or is about to start.
-    " Maximize gvim window (for an alternative on Windows, see simalt below).
-    "set lines=42  columns=82
-"endif
 execute pathogen#infect()
+
 nmap <silent> <S-Up> :wincmd k<CR>
 nmap <silent> <S-Down> :wincmd j<CR>
 nmap <silent> <S-Left> :wincmd h<CR>
 nmap <silent> <S-Right> :wincmd l<CR>
+
+set background=dark
+colorscheme triplejelly
+
 se title
-filetype plugin indent on
-set number
-colorscheme Tomorrow-Night-Eighties
-let mapleader = "\<Space>"
-set mouse=n
-syntax on
-inoremap jk <ESC>
-let g:vinarise_enable_auto_detect=1
 set t_Co=256
+set encoding=utf-8
+scriptencoding utf-8
+set shell=/bin/sh
+
+filetype on
+filetype plugin on
+filetype indent on
+
+set number
+syntax on
+hi Visual ctermfg=000 ctermbg=011
+
+let mapleader = "\<Space>"
+inoremap jk <ESC>
+set mouse=n
+set backspace=indent,eol,start
+
 set ignorecase
 set smartcase
-set backspace=indent,eol,start
+set incsearch
+
 set tabstop=4
 set softtabstop=4
 set expandtab
 set shiftwidth=4
-set smartindent
-set autoindent
 set scrolloff=7
-set encoding=utf-8
-scriptencoding utf-8
-set shell=/bin/zsh
+
+set visualbell
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 set laststatus=2
 set history=200
 set undolevels=200
-set visualbell
 set undofile
 set undodir=~/.vim/undodir
-set number!
-set relativenumber!
+
 hi CursorLineNr ctermfg=blue
-set incsearch
-"execute "set colorcolumn=" . join(range(81,335), ',')
+
 cmap w!! w !sudo tee > /dev/null %"
 nmap <Leader><Leader> V
 vmap v <Plug>(expand_region_expand)
 nnoremap <Leader>fs :w<CR>
 nnoremap <leader>m :MRU<CR>
 nnoremap <Leader>qq :q!<CR>
-nnoremap <leader>t: t-command<CR>
-nmap <leader>q :set list!<CR>
-set listchars=tab:▸\ ,eol:¬
-map <F2> :VimShellCurrentDir<CR>
+nnoremap <;> :VimShellCurrentDir<CR>
 nnoremap <silent> zd :call Translate(expand("<cword>"), "de")<CR>
 nnoremap <silent> ze :call Translate(expand("<cword>"), "en")<CR>
 nnoremap <leader><leader>k :TagbarToggle<CR>
@@ -69,13 +70,14 @@ endfunction
 "reopen previously opened file
 nnoremap <Leader><Leader> :e#<CR>
 
+nnoremap <leader>ff: t-command<CR>
 "reindex file for command-T pressing leader-r:
 noremap <Leader>r :CommandTFlush<CR>
 "ignore some file in command-t:
 set wildignore+=*.mp3,*.mp4,*.gif,*.jpg,*.png
 
 " Search for the ... arguments separated with whitespace (if no '!'),
-" or with non-word characters (if '!' added to command).
+" or with non-word characters (if '!' added thttps://www.reddit.com/user/cbmusero command).
 function! SearchMultiLine(bang, ...)
   if a:0 > 0
     let sep = (a:bang) ? '\_W\+' : '\_s\+'
@@ -120,16 +122,14 @@ vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
   "autocmd VimEnter * wincmd p
   "}}}
 
-  "{{{Spellcheck:
+"{{{Spellcheck:
   "spellcheck with shift-s
   nmap <silent> <S-s> :set spell!<CR>
   set spelllang=en_us
   hi SpellBad    ctermfg=000      ctermbg=011     cterm=bold
   "}}}
 
-  hi Visual ctermfg=000 ctermbg=011
-
-  "autoformt
+"autoformt
   let g:formatterpath = ['/usr/bin/astyle --style=java']
   noremap <F5> :Autoformat<CR>
 
@@ -157,7 +157,7 @@ vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
               \ <SID>check_back_space() ? "\<TAB>" :
               \ neocomplete#start_manual_complete()
 
-  function! s:check_back_space()
+function! s:check_back_space()
       let col = col('.') - 1
       return !col || getline('.')[col - 1]  =~ '\s'
   endfunction
@@ -192,15 +192,15 @@ vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
   "hi CursorLine   ctermbg=darkgrey
   "hi CursorColumn  ctermbg=darkgrey
 
-let g:airline_theme='badwolf'
+""let g:airline_theme='badwolf'
 
-""  let g:lightline = {
- ""             \ 'colorscheme': 'PaperColor_dark',
- ""             \ 'component_function': {
-  ""            \ 'filetype': 'MyFiletype',
-   ""          \ 'fileformat': 'MyFileformat',
-    ""          \}
-     ""         \}
+  let g:lightline = {
+              \ 'colorscheme': 'jellybeans',
+              \ 'component_function': {
+              \ 'filetype': 'MyFiletype',
+             \ 'fileformat': 'MyFileformat',
+              \}
+              \}
 
 
   map <leader><leader>a :Assembly<CR>
@@ -228,7 +228,7 @@ function! MyFiletype()
   omap f <Plug>Sneak_s
   omap F <Plug>Sneak_S
 
-  "translate-de-en:
+"translate-de-en:
   function! Translate(text, to_lang)
       if a:to_lang ==? "de"
           exe "!trans -b en:de \"" . a:text . "\""
@@ -296,8 +296,7 @@ function! MyFiletype()
           let &l:ts = l:tabstop
           let &l:sw = l:tabstop
       endif
-
-      call SummarizeTabs()
+ call SummarizeTabs()
   endfunction
 
   function! SummarizeTabs()

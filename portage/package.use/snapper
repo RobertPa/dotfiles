@@ -1,1 +1,1 @@
-app-backup/snapper btrfs ext4 pam xattr -lvm
+app-backup/snapper -pam

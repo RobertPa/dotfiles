@@ -1,0 +1,1 @@
+/home/raka/.config/fisherman/sudope/functions/sudope.fish

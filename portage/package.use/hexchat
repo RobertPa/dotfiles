@@ -1,1 +1,0 @@
-net-irc/hexchat gtk ipv6 nls plugins python ssl -dbus -libcanberra -libnotify -libproxy -ntlm -perl -plugin-checksum -plugin-doat -plugin-fishlim -plugin-sysinfo spell -theme-manager

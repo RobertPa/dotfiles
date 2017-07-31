@@ -1,1 +1,1 @@
-app-editors/emacs X athena Xaw3d acl -alsa cairo dbus games -gconf -gfile gif xwidgets xpm png jpeg gtk3 -gtk -motif xft tiff svg ssl -source -sound libxml2
+app-editors/emacs X athena Xaw3d acl -alsa cairo -dbus -games -gconf -gfile gif xwidgets xpm png jpeg gtk3 gtk -motif xft tiff svg ssl -source -sound libxml2

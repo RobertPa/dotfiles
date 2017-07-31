@@ -1,4 +1,4 @@
-browser surf
+browser qutebrowser
 
 bind-key j next
 bind-key k prev
@@ -11,7 +11,7 @@ bind-key K prev article
 
 color background   default   default
 color listnormal   default default
-color listfocus    black     red 
+color listfocus    black    green 
 color info         default   black
 color article      default   default
 color listnormal_unread yellow default
@@ -25,6 +25,7 @@ max-items 0
 article-sort-order date desc
 auto-reload yes
 reload-time 15
+notify-program "/usr/local/bin/nnotify"
 #clean-on-quit yes
 confirm-exit yes
 delete-read-articles-on-quit no

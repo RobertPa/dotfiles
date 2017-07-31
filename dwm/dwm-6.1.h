@@ -2,17 +2,19 @@
 
 /* appearance */
 static const char *fonts[] = {
-	"Hack:size=9"
+	"Hack:size=8"
 };
 
 
 static const char dmenufont[]       = "monospace:size=10";
 static const char normbordercolor[] = "#444444";
-static const char normbgcolor[]     = "#222222";
+static const char normbgcolor[]     = "#16191A";
 static const char normfgcolor[]     = "#bbbbbb";
-static const char selbordercolor[]  = "#680D0D";
-static const char selbgcolor[]      = "#680D0D";
-static const char selfgcolor[]      = "#eeeeee";
+static const char selbordercolor[]  = "#0c630f";
+//static const char selbordercolor[]  = "#1AA142";
+static const char selbgcolor[]      = "#0c630f";
+//static const char selbgcolor[]      = "#1AA142";
+static const char selfgcolor[]      = "#000000";
 static const unsigned int borderpx  = 3;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
@@ -27,9 +29,8 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	//{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
-      { NULL,       NULL,       NULL,       0,            False,       -1 },
-
+     // { NULL,       NULL,       NULL,       0,            False,       -1 },
+	  { "Gimp",     NULL,       NULL,       0,            1,           -1 },
 };
 
 /* layout(s) */
@@ -60,41 +61,39 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]  = { "st", NULL };
+//static const char *termcmd[]  = { "tabbed", "-r", "2", "st", "-w", "\'\'", NULL };
+static const char *termcmd[]  = {"/usr/local/bin/st", NULL };
 
-//static const char *filemanager_cmd[] = {"thunar", NULL};
 static const char *dmenu_cmd[] = {"dmenu_recent", NULL};
 static const char *filemanager_cmd[] = {"st","-e", "ranger", NULL};
-static const char *surf_cmd[] = {"tabbed", "surf", "-e", NULL};
+//static const char *surf_cmd[] = {"tabbed", "surf", "-e", NULL};
+static const char *surf_cmd[] = {"firejail", "qutebrowser", NULL};
 static const char *powermode_cmd[] = {"powermode", NULL};
-static const char *suspend_cmd[] = {"localsuspend", NULL};
-static const char *windowswitch_cmd[] = {"rofi", "-show", "window", NULL};
-static const char *firefox_cmd[] = {"/usr/local/bin/firefox", NULL};
+static const char *suspend_cmd[] = {"pm-suspend", NULL};
+static const char *window_switch_cmd[] = {"window_switch", NULL};
+static const char *firefox_cmd[] = {"firejail", "firefox", NULL};
 static const char *slock_cmd[] = {"slock", NULL};
-static const char *rofi_cmd[] = {"/usr/local/bin/rofistarter", NULL};
 static const char *unmount_cmd[] = {"devmon", "--unmount-removable", NULL};
 static const char *taskmanager_cmd[] = {"lxtask", NULL};
-static const char *chrome_cmd[] = {"firejail", "chromium", NULL};
+static const char *chrome_cmd[] = {"firejail", "chromium", "--process-per-site", NULL};
 static const char *paste_cmd[] = {"clipmenu", "-sb", "#680d0d", "-sf", "white", "-l", "15", NULL};
-static const char *dbrowse_cmd[] = {"dbrowse", NULL};
 
 static Key keys[] = {
      /* modifier                  key            function        argument */
 	//{ MODKEY,                    XK_space,      spawn,          {.v = dmenucmd } },
-	{ MODKEY,                    XK_space,      spawn,          {.v = dmenu_cmd} },
+    { MODKEY,                    XK_space,      spawn,          {.v = dmenu_cmd} },
 	{ MODKEY,                    XK_Return,     spawn,          {.v = termcmd } },
     { MODKEY|ShiftMask,          XK_d,          spawn,          {.v = filemanager_cmd} },
     { MODKEY|ShiftMask,          XK_s,          spawn,          {.v = surf_cmd} },
     { MODKEY|ShiftMask,          XK_p,          spawn,          {.v = powermode_cmd} },
     { MODKEY|ShiftMask,          XK_a,          spawn,          {.v = suspend_cmd} },
-    { MODKEY,                    XK_n,          spawn,          {.v = windowswitch_cmd} },
+    { MODKEY,                    XK_n,          spawn,          {.v = window_switch_cmd} },
     { MODKEY|ShiftMask,          XK_f,          spawn,          {.v = firefox_cmd} },
     { MODKEY|ShiftMask,          XK_i,          spawn,          {.v = slock_cmd} },
     { MODKEY|ShiftMask,          XK_u,          spawn,          {.v = unmount_cmd} },
     { MODKEY|ShiftMask,          XK_Delete,     spawn,          {.v = taskmanager_cmd} },
     { MODKEY|ShiftMask,          XK_c,          spawn,          {.v = chrome_cmd} },
     { MODKEY|ShiftMask,          XK_v,          spawn,          {.v = paste_cmd} },
-    { MODKEY|ShiftMask,          XK_o,          spawn,          {.v = dbrowse_cmd} },
 	{ MODKEY,                    XK_b,          togglebar,      {0} },
 	{ MODKEY,                    XK_k,          focusstack,     {.i = +1 } },
 	{ MODKEY,                    XK_j,          focusstack,     {.i = -1 } },

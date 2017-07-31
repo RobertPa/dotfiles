@@ -1,1 +1,1 @@
-xfce-extra/tumbler -curl -ffmpeg -gstreamer jpeg pdf
+xfce-extra/tumbler -curl ffmpeg -gstreamer jpeg pdf
