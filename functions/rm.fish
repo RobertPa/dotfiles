@@ -1,3 +1,3 @@
 function rm
-	trash -v $argv
+   trash "$argv"
 end

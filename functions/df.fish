@@ -1,3 +1,3 @@
 function df
-	command df -Th --total $argv
+	command df -h
 end

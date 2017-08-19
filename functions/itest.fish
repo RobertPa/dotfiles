@@ -1,3 +1,3 @@
 function itest
-	ping -c3 www.google.com
+	ping -c2 www.google.com
 end

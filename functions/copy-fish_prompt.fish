@@ -1,26 +1,47 @@
-function fish_prompt
-	if not set -q VIRTUAL_ENV_DISABLE_PROMPT
-      set -g VIRTUAL_ENV_DISABLE_PROMPT true
-   end
-   set_color yellow
-   printf '%s' (whoami)
-   set_color normal
-   printf ' at '
+function fish_prompt --description 'Write out the prompt'
+	#Save the return status of the previous command
+    set stat $status
 
-   set_color magenta
-   printf '%s' (hostname|cut -d . -f 1)
-   set_color normal
-   printf ' in '
+# Just calculate these once, to save a few cycles when displaying the prompt
+    if not set -q __fish_prompt_hostname
+        set -g __fish_prompt_hostname (hostname|cut -d . -f 1)
+    end
 
-   set_color $fish_color_cwd
-   printf '%s' (prompt_pwd)
-   set_color normal
+if not set -q __fish_prompt_normal
+        set -g __fish_prompt_normal (set_color normal)
+    end
 
-   # Line 2
-   echo
-   if test $VIRTUAL_ENV
-       printf "(%s) " (set_color blue)(basename $VIRTUAL_ENV)(set_color normal)
-   end
-   printf '↪ '
-   set_color normal
+if not set -q __fish_color_blue
+        set -g __fish_color_blue (set_color -o blue)
+    end
+
+#Set the color for the status depending on the value
+    set __fish_color_status (set_color -o green)
+    if test $stat -gt 0
+        set __fish_color_status (set_color -o red)
+    end
+
+switch $USER
+
+case root toor
+
+if not set -q __fish_prompt_cwd
+            if set -q fish_color_cwd_root
+                set -g __fish_prompt_cwd (set_color $fish_color_cwd_root)
+            else
+                set -g __fish_prompt_cwd (set_color $fish_color_cwd)
+            end
+        end
+
+printf '%s@%s %s%s%s# ' $USER $__fish_prompt_hostname "$__fish_prompt_cwd" (prompt_pwd) "$__fish_prompt_normal"
+
+case '*'
+
+if not set -q __fish_prompt_cwd
+            set -g __fish_prompt_cwd (set_color $fish_color_cwd)
+        end
+
+printf '[%s] %s%s@%s %s%s %s(%s)%s \f\r> ' (date "+%H:%M:%S") "$__fish_color_blue" $USER $__fish_prompt_hostname "$__fish_prompt_cwd" "$PWD" "$__fish_color_status" "$stat" "$__fish_prompt_normal"
+
+end
 end

@@ -1,3 +1,7 @@
 function update4
-	doas emerge --verbose --ask --update --deep --with-bdeps=y --newuse @world
+    if test -e /usr/bin/xbps-install
+        sudo xbps-install -Su
+    else
+	    doas emerge --verbose --ask --update --deep --with-bdeps=y --newuse @world
+    end
 end
