@@ -18,7 +18,7 @@ echo 'IP' $(curl -s http://whatismyip.akamai.com)
 
 export EDITOR="vim"
 export BROWSER="chrome"
-PKG_PATH=http://ftp.eu.openbsd.org/pub/OpenBSD/snapshots/packages/amd64
+PKG_PATH=http://mirror.hs-esslingen.de/pub/OpenBSD/snapshots/packages/amd64/
 export PKG_PATH
 export PARALLEL_BUILD=Yes 
 export MAKE_JOBS=8 
@@ -28,14 +28,10 @@ xautolock -time 10 -locker slock &
 #devmon --info-on-mount &
 #setlayout
 xmodmap ~/.capsswitch
-
-#amixer set 'Master' 100% unmute
-mixerctl outputs.master=200,200
-mixerctl outputs.spkr_mute=on
-mixerctl record.volume.mute=on
 wsconsctl keyboard.bell.volume=0
+xset b off
+xset b 0 0 0
 
-#light -S 85
 sct 4900
 xbacklight -set 87
 
@@ -46,6 +42,7 @@ nitrogen --restore &
 #xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Timeout" 200
 #xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Axes" 6 7 4 5
 compton -CGb
+tmuxinator base
 #exec dwm
 exec spectrwm
 #exec ck-launch-session dbus-launch --sh-syntax --exit-with-session dwm

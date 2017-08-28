@@ -1,6 +1,8 @@
 let g:pathogen_disabled = [ 'vim-better-whitespace' ]
 execute pathogen#infect()
 
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+
 nmap <silent> <S-Up> :wincmd k<CR>
 nmap <silent> <S-Down> :wincmd j<CR>
 nmap <silent> <S-Left> :wincmd h<CR>
@@ -25,6 +27,7 @@ hi Visual ctermfg=000 ctermbg=011
 
 let mapleader = "\<Space>"
 inoremap jk <ESC>
+inoremap <C-j> <C-o>A
 set mouse=n
 set backspace=indent,eol,start
 
@@ -50,6 +53,8 @@ set undodir=~/.vim/undodir
 
 hi CursorLineNr ctermfg=blue
 
+let g:AutoPairsFlyMode = 1
+
 cmap w!! w !sudo tee > /dev/null %"
 nmap <Leader><Leader> V
 vmap v <Plug>(expand_region_expand)
@@ -67,10 +72,16 @@ func! CompileRunGcc()
     exec "! ./%<"
 endfunction
 
+let g:ranger_map_keys = 0
+nnoremap <leader>ar :Ranger<CR>
+
 "reopen previously opened file
 nnoremap <Leader><Leader> :e#<CR>
 
-nnoremap <leader>ff: t-command<CR>
+nnoremap <leader>bd :bd<CR>
+
+nnoremap <leader>ff :CtrlP<CR>
+nnoremap <leader>bb :CtrlPBuffer<CR>
 "reindex file for command-T pressing leader-r:
 noremap <Leader>r :CommandTFlush<CR>
 "ignore some file in command-t:
@@ -110,12 +121,12 @@ vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
   let NERDTreeIgnore=['\.DS_Store', '\.swp', '\.jpg', '\.png', '\.mp3','\.mp4']
 
   "open/close nerdtree with ctrl-n:
-  map <leader>n :NERDTreeTabsToggle<CR>
-  map  <S-l> :tabn<CR>
-  map  <S-h> :tabp<CR>
-  nnoremap  <leader><leader>t :tabnew<CR>
+  nnoremap <leader>nt :NERDTree<CR>
+  "map  <S-l> :tabn<CR>
+  "map  <S-h> :tabp<CR>
+  "nnoremap  <leader><leader>t :tabnew<CR>
 
-  let g:NERDTreeDirArrowExpandable = '▶'
+  let g:NERDTreeDirArrowExpandable = ''
   let g:NERDTreeDirArrowCollapsible = '▼'
   "let NERDTreeMapActivateNode='<right>'
   "autocmd VimEnter * NERDTree
@@ -124,7 +135,7 @@ vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 
 "{{{Spellcheck:
   "spellcheck with shift-s
-  nmap <silent> <S-s> :set spell!<CR>
+  nnoremap <leader>tS :set spell!<CR>
   set spelllang=en_us
   hi SpellBad    ctermfg=000      ctermbg=011     cterm=bold
   "}}}
@@ -138,20 +149,20 @@ vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 
   "{{{Syntax-Check:
   "Syntax-Check with leader-s
-  map <leader>s ::SyntasticCheck<CR>
+  nnoremap <leader>ts ::SyntasticCheck<CR>
+  nnoremap <leader>tsq ::SyntasticReset<CR>
   let g:syntastic_always_populate_loc_list = 1
   let g:syntastic_auto_loc_list = 1
   let g:syntastic_check_on_open = 0
   let g:syntastic_check_on_wq = 0
   let g:syntastic_cpp_check_header = 1
-  let g:syntastic_error_symbol = "✗"
-  let g:syntastic_warning_symbol = "⚠"
+  let g:syntastic_error_symbol = ""
+  let g:syntastic_warning_symbol = ""
   let g:syntastic_c_compiler = "gcc"
   let g:syntastic_cpp_compiler_options = "-Wall -pedantic"
   "}}}
+  
   let g:neocomplete#enable_at_startup = 1
-
-
   " <TAB>: completion.
   inoremap <expr><TAB>  pumvisible() ? "\<C-n>" :
               \ <SID>check_back_space() ? "\<TAB>" :
@@ -192,16 +203,43 @@ function! s:check_back_space()
   "hi CursorLine   ctermbg=darkgrey
   "hi CursorColumn  ctermbg=darkgrey
 
-""let g:airline_theme='badwolf'
+let g:airline_theme='deus'
+let g:airline_powerline_fonts = 1
+if !exists('g:airline_symbols')
+        let g:airline_symbols = {}
+    endif
 
-  let g:lightline = {
-              \ 'colorscheme': 'jellybeans',
-              \ 'component_function': {
-              \ 'filetype': 'MyFiletype',
-             \ 'fileformat': 'MyFileformat',
-              \}
-              \}
-
+    " unicode symbols
+     let g:airline_left_sep = '»'
+     let g:airline_left_sep = '▶'
+     let g:airline_right_sep = '«'
+     let g:airline_right_sep = '◀'
+     let g:airline_symbols.linenr = '␊'
+     let g:airline_symbols.linenr = '␤'
+     let g:airline_symbols.linenr = '¶'
+     let g:airline_symbols.branch = '⎇'
+     let g:airline_symbols.paste = 'ρ'
+     let g:airline_symbols.paste = 'Þ'
+     let g:airline_symbols.paste = '∥'
+     let g:airline_symbols.whitespace = 'Ξ'
+    
+     " airline symbols
+     let g:airline_left_sep = ''
+     let g:airline_left_alt_sep = ''
+     let g:airline_right_sep = ''
+     let g:airline_right_alt_sep = ''
+     let g:airline_symbols.branch = ''
+     let g:airline_symbols.readonly = ''
+     let g:airline_symbols.linenr = ''
+    
+""  let g:lightline = {
+"              \ 'colorscheme': 'jellybeans',
+"              \ 'component_function': {
+"              \ 'filetype': 'MyFiletype',
+"             \ 'fileformat': 'MyFileformat',
+"              \}
+"              \}
+"
 
   map <leader><leader>a :Assembly<CR>
   function! Assembly()
@@ -351,25 +389,25 @@ function! MyFiletype()
   nmap <Leader>v :call setreg("\"",system("xclip -o -selection clipboard"))<CR>p
 
   " NERDTress File highlighting
-  function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
-      exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
-      exec 'autocmd FileType nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
-  endfunction
+"  function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
+"      exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+"      exec 'autocmd FileType nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+"  endfunction
 
-  call NERDTreeHighlightFile('sh', 'green', 'none', 'green', '#151515')
-  call NERDTreeHighlightFile('awk', 'yellow', 'none', 'yellow', '#151515')
-  call NERDTreeHighlightFile('h', 'blue', 'none', '#3366FF', '#151515')
-  call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
-  call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow', '#151515')
-  call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#151515')
-  call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
-  call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#151515')
-  call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', '#151515')
-  call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
-  call NERDTreeHighlightFile('c', 'Red', 'none', '#ffa500', '#151515')
-  call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
-  call NERDTreeHighlightFile('ds_store', 'Gray', 'none', '#686868', '#151515')
-  call NERDTreeHighlightFile('gitconfig', 'Gray', 'none', '#686868', '#151515')
-  call NERDTreeHighlightFile('gitignore', 'Gray', 'none', '#686868', '#151515')
-  call NERDTreeHighlightFile('bashrc', 'Gray', 'none', '#686868', '#151515')
-  call NERDTreeHighlightFile('bashprofile', 'Gray', 'none', '#686868', '#151515')
+  "call NERDTreeHighlightFile('sh', 'green', 'none', 'green', '#151515')
+  "call NERDTreeHighlightFile('awk', 'yellow', 'none', 'yellow', '#151515')
+  "call NERDTreeHighlightFile('h', 'blue', 'none', '#3366FF', '#151515')
+  "call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
+  "call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow', '#151515')
+  "call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#151515')
+  "call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
+  "call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#151515')
+  "call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', '#151515')
+  "call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
+  "call NERDTreeHighlightFile('c', 'Red', 'none', '#ffa500', '#151515')
+  "call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
+  "call NERDTreeHighlightFile('ds_store', 'Gray', 'none', '#686868', '#151515')
+  "call NERDTreeHighlightFile('gitconfig', 'Gray', 'none', '#686868', '#151515')
+  "call NERDTreeHighlightFile('gitignore', 'Gray', 'none', '#686868', '#151515')
+  "call NERDTreeHighlightFile('bashrc', 'Gray', 'none', '#686868', '#151515')
+  "call NERDTreeHighlightFile('bashprofile', 'Gray', 'none', '#686868', '#151515')

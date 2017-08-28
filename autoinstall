@@ -1,0 +1,70 @@
+#!/bin/sh
+
+NUTZER="user"
+HOMED="/home/${NUTZER}"
+
+#create directories
+mkdir -p "${HOMED}/test"
+mkdir -p "${HOMED}/.config/fish/functions"
+mkdir -p "${HOMED}/.config/mpv"
+mkdir -p "${HOMED}/.config/ranger"
+mkdir -p "${HOMED}/Downloads/software_sources"
+mkdir -p "${HOMED}/.newsbeuter"
+
+#install git
+#pkg_add git curl
+
+#get dotfiles
+#cd ${HOMED}/Downloads
+#git clone https://github.com/RobertPa/dotfiles
+
+#curl -Lo ${HOMED}/.config/fish/functions/fisher.fish --create-dirs https://git.io/fisher
+
+#cd dotfiles
+#cp -i ./xinitrc ${HOMED}/.xinitrc
+#cp -i ./vimrc ${HOMED}/.vimrc
+#cp -i ./mpv.conf ${HOMED}/.config/mpv
+cp -i ./spectrwm.conf ${HOMED}/.spectrwm.conf
+cp -i ./Xresources ${HOMED}/.Xressources
+cp -i ./capsswitch ${HOMED}/.capsswitch
+cp ./functions/* ${HOMED}/.config/fish/functions
+
+
+
+#ports tree & src
+#user mod -G wsrc $NUTZER
+#cd /usr
+#mkdir -p   xenocara ports
+#chgrp wsrc xenocara ports
+#chmod 775  xenocara ports
+#cvs -qd anoncvs@anoncvs.ca.openbsd.org:/cvs get -P src
+#cvs -qd anoncvs@anoncvs.ca.openbsd.org:/cvs get -P ports
+#cvs -qd anoncvs@anoncvs.ca.openbsd.org:/cvs get -P xenocara
+
+install_packages()
+
+#cd ${HOMED}/Downloads/software_sources
+#git clone https://github.com/martanne/abduco
+#cd abduco
+#./configure && make && make install
+
+#cd ${HOMED}/Downloads/software_sources
+#git clone https://github.com/neeasade/xst
+#cd xst
+#make && make install
+
+#cd ${HOMED}/Downloads/software_sources
+#git clone https://github.com/soimort/translate-shell
+#cd translate-shell/
+#make && make install
+
+fw_update -a
+
+#chown -R $NUTZER:$NUTZER ${HOMED}
+
+install_packages(){
+for i in $(cat ${HOMED}/Downloads/dotfiles/basic_pkgs_openbsd); do
+    pkg_add $i;
+done
+}
+

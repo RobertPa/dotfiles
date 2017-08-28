@@ -11,8 +11,10 @@ st.shell:        /usr/local/bin/fish
 ! The following options options can be reloaded via USR1 signal.
 !st.font:        Roboto Mono for Powerline:pixelsize=15:antialias=true:autohint=true;
 st.font:         Fira Mono for Powerline:Regular:pixelsize=14:antialias=true:autohint=true;
-URxvt.font: xft:Fira Mono for Powerline:size=11
-URxvt.boldFont:xft:Fira Mono for Powerline:size=11
+!URxvt.font: xft:Fira Mono for Powerline:size=11
+!URxvt.boldFont:xft:Fira Mono for Powerline:size=11
+URxvt.font: xft:FuraMonoforPowerline Nerd Font:size=11
+URxvt.boldFont: xft:FuraMonoforPowerline Nerd Font:Regular:size=11
 
 !st.font:         Fantasque Sans Mono:Regular:pixelsize=16:antialias=true:autohint=true;
 st.borderpx:    2
@@ -89,7 +91,8 @@ URxvt*saveLines: 1035
 !urxvt*depth: 32
 !urxvt*background: rgba:0000/0000/0200/c800
 URxvt.scrollBar: false
-URxvt*fading: 40 
+URxvt*fading: 35
+*URxvt.perl-ext-common:		osc-xterm-clipboard
 
 !xterm
 XTerm*faceName: Bitstream Vera Serif Mono
