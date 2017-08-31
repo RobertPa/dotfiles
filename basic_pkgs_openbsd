@@ -8,7 +8,7 @@ emacs--gtk3%emacs
 gawk--
 gimp--
 git--
-gmake--
+git-x11--
 hack-fonts--
 htop--
 iftop--
