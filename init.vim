@@ -1,31 +1,37 @@
-
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'NLKNguyen/c-syntax.vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins'  }
-Plug 'Shougo/neosnippet-snippets'
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/vinarise'
+Plug 'Shougo/neopairs.vim'
+Plug 'Shougo/neosnippet-snippets',{ 'for': ['c', 'cpp'] } 
+Plug 'Shougo/neosnippet.vim',{ 'for': ['c', 'cpp'] } 
+"Plug 'Shougo/vinarise'
+Plug 'christoomey/vim-tmux-navigator'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'francoiscabrol/ranger.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'justinmk/vim-sneak'
+Plug 'majutsushi/tagbar', { 'for': ['c', 'cpp'] }
 Plug 'mbbill/undotree'
 Plug 'mhinz/vim-startify'
-Plug 'rhysd/vim-clang-format'
+Plug 'rhysd/vim-clang-format', { 'for': ['c', 'cpp'] }
 Plug 'ryanoasis/vim-devicons'
 Plug 'ryanoasis/vim-webdevicons'
 Plug 'terryma/vim-expand-region'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'tomasr/molokai'
 Plug 'tpope/vim-commentary'
+Plug 'ujihisa/neco-look'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'w0rp/ale'
+Plug 'w0rp/ale', { 'for': ['c', 'cpp'] }
 Plug 'wellle/targets.vim'
-Plug 'zchee/deoplete-clang'
+Plug 'zchee/deoplete-clang',{ 'for': ['c', 'cpp'] }
+
+Plug 'MaxSt/FlatColor'
 Plug 'chriskempson/vim-tomorrow-theme'
+Plug 'joshdick/onedark.vim'
+Plug 'tomasr/molokai'
 call plug#end()
 
 nnoremap <C-J> <C-W><C-J>
@@ -35,7 +41,8 @@ nnoremap <C-H> <C-W><C-H>
 
 "gruvbox, triplejelly,molokai,PaperColor
 set background=dark
-colorscheme molokai 
+colorscheme onedark
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 se title
 set t_Co=256
@@ -77,16 +84,27 @@ set wildmenu
 set wildmode=full
 set clipboard+=unnamedplus
 
+
 hi CursorLineNr ctermfg=blue
 
+let g:tagbar_ctags_bin = '/usr/local/bin/ectags'
 let g:AutoPairsFlyMode = 1
 let g:goyo_width = 160
 let g:ranger_map_keys = 0
 let g:ctrlp_show_hidden = 1
+let g:ctrlp_working_path_mode = 0
 set grepprg=rg\ --color=never
-let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+" let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(so|mp3|mp4)$',
+  \ }
+let g:ctrlp_clear_cache_on_exit = 0
+set wildignore+=*.mp3,*.mp4,*.gif,*.jpg,*.png,*.swp,*.tmp,*.pdf,*.mkv
+set wildignore+=Music,Desktop,Videos,data,Downloads,chromium
+set wildignore+=.cache,.emacs.d,.mozilla,.Trash,.gimp*,.vim,.ssh,.npm
+set wildignore+=*.7z,*.lz4,*.zip,*.gz,*.rar,*.bz2
 
-set wildignore+=*.mp3,*.mp4,*.gif,*.jpg,*.png
 
 let g:clang_format#detect_style_file = 1
 "cpp check:
@@ -162,6 +180,7 @@ map T <Plug>Sneak_T
 
 "deoplete
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#auto_complete_delay = 25
 "use tab key
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 "deoplete-clang
@@ -208,7 +227,7 @@ nnoremap <Leader>fs :w<CR>
 nnoremap <leader>m :MRU<CR>
 nnoremap <Leader>qq :q!<CR>
 nnoremap <leader>bd :bd<CR>
-nnoremap <leader>ff :CtrlP<CR>
+nnoremap <leader>ff :CtrlP ~/<CR>
 nnoremap <leader>bb :CtrlPBuffer<CR>
 nnoremap <leader>% :vsp<CR>
 nnoremap <leader>" :sp<CR>
@@ -224,7 +243,7 @@ nnoremap <leader><leader>k :TagbarToggle<CR>
 nnoremap <silent> zd :call Translate(expand("<cword>"), "de")<CR> nnoremap <silent> ze :call Translate(expand("<cword>"), "en")<CR>
 map <F9> :call CompileRunGcc()<CR>
 
-nnoremap <leader>l :call NumberToggle()<CR>
+nnoremap <leader>tn :call NumberToggle()<CR>
 nnoremap <leader>nt :NERDTree<CR>
 nnoremap <leader>ar :Ranger<CR>
 map <leader><leader>as :Assembly<CR>
@@ -372,15 +391,26 @@ function! MyFiletype()
       endtry
   endfunction "end of setting tabstop,stoftt..and shiftwidth
   "}}}
+    
+  "Compatibility with multiple cursors
+  function g:Multiple_cursors_before()
+         let g:deoplete#disable_auto_complete = 1
+  endfunction
+  function g:Multiple_cursors_after()
+         let g:deoplete#disable_auto_complete = 0
+   endfunction
+
 
 ""Autocommands
-autocmd CompleteDone * silent! pclose!
+"autocmd CompleteDone * silent! pclose!
 
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 autocmd VimResized * wincmd =
-  
+call deoplete#custom#set('_', 'converters', ['converter_auto_paren'])
+
+
 "edit file anyway when swapfile exists, but issue a warning
 augroup NoSimultaneousEdits
     autocmd!

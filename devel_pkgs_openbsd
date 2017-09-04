@@ -1,7 +1,8 @@
-autoconf--%2.69
+autoconf--
 gmake--
 llvm--
 autogen--
-automake--%1.9
+automake--
 libtool--
 gdb--
+ectags--
