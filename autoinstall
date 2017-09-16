@@ -13,7 +13,7 @@ HOMED="/home/${NUTZER}"
 
 pkg_add git curl
 
-#get dotfiles
+get_dotfiles(){
 cd ${HOMED}/Downloads
 git clone https://github.com/RobertPa/dotfiles
 
@@ -27,8 +27,9 @@ cp -i ./spectrwm.conf ${HOMED}/.spectrwm.conf
 cp -i ./Xresources ${HOMED}/.Xressources
 cp -i ./capsswitch ${HOMED}/.capsswitch
 cp ./functions/* ${HOMED}/.config/fish/functions
+}
 
-#ports tree & src
+source_trees(){
 user mod -G wsrc $NUTZER
 cd /usr
 mkdir -p   xenocara ports src
@@ -37,6 +38,8 @@ chmod 775  xenocara ports
 cvs -qd anoncvs@anoncvs.ca.openbsd.org:/cvs get -P src
 cvs -qd anoncvs@anoncvs.ca.openbsd.org:/cvs get -P ports
 cvs -qd anoncvs@anoncvs.ca.openbsd.org:/cvs get -P xenocara
+}
+
 
 pkg_add -l ${HOMED}/Downloads/dotfiles/basic_pkgs_openbsd
 

@@ -4,11 +4,8 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins'  }
 Plug 'Shougo/neopairs.vim'
 Plug 'Shougo/neosnippet-snippets',{ 'for': ['c', 'cpp'] } 
 Plug 'Shougo/neosnippet.vim',{ 'for': ['c', 'cpp'] } 
-"Plug 'Shougo/vinarise'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'francoiscabrol/ranger.vim'
-Plug 'jiangmiao/auto-pairs'
+Plug 'Raimondi/delimitMate'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'justinmk/vim-sneak'
@@ -17,21 +14,23 @@ Plug 'mbbill/undotree'
 Plug 'mhinz/vim-startify'
 Plug 'rhysd/vim-clang-format', { 'for': ['c', 'cpp'] }
 Plug 'ryanoasis/vim-devicons'
-Plug 'ryanoasis/vim-webdevicons'
 Plug 'terryma/vim-expand-region'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'tpope/vim-commentary'
+Plug 'scrooloose/nerdcommenter'
 Plug 'ujihisa/neco-look'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'w0rp/ale', { 'for': ['c', 'cpp'] }
+Plug 'w0rp/ale'
 Plug 'wellle/targets.vim'
 Plug 'zchee/deoplete-clang',{ 'for': ['c', 'cpp'] }
-
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'airblade/vim-rooter'
+"Colors
 Plug 'MaxSt/FlatColor'
 Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'joshdick/onedark.vim'
-Plug 'tomasr/molokai'
+"Plug 'tomasr/molokai'
 call plug#end()
 
 nnoremap <C-J> <C-W><C-J>
@@ -41,8 +40,9 @@ nnoremap <C-H> <C-W><C-H>
 
 "gruvbox, triplejelly,molokai,PaperColor
 set background=dark
-colorscheme onedark
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+colorscheme flatcolor
+"let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+"set termguicolors
 
 se title
 set t_Co=256
@@ -87,8 +87,14 @@ set clipboard+=unnamedplus
 
 hi CursorLineNr ctermfg=blue
 
+let delimitMate_expand_cr = 1
+let delimitMate_expand_space = 1
+
+let g:rooter_change_directory_for_non_project_files = 'home'
+let g:rooter_manual_only = 1
+
 let g:tagbar_ctags_bin = '/usr/local/bin/ectags'
-let g:AutoPairsFlyMode = 1
+"let g:AutoPairsFlyMode = 1
 let g:goyo_width = 160
 let g:ranger_map_keys = 0
 let g:ctrlp_show_hidden = 1
@@ -105,11 +111,18 @@ set wildignore+=Music,Desktop,Videos,data,Downloads,chromium
 set wildignore+=.cache,.emacs.d,.mozilla,.Trash,.gimp*,.vim,.ssh,.npm
 set wildignore+=*.7z,*.lz4,*.zip,*.gz,*.rar,*.bz2
 
+let g:rg_command = 'rg --files --no-ignore --hidden --follow  
+  \ -g "*.{js,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf}"
+  \ -g "!{.git,node_modules,vendor}/*" '
+
+command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
 
 let g:clang_format#detect_style_file = 1
 "cpp check:
 let g:cpp_cppcheck_options = '--language=c --enable=all'
 
+"ALE
+nnoremap <leader>ts :ALEToggle<cr>
 let g:ale_c_clang_options = '-std=c11 -Wall'
 let g:ale_c_cppcheck_executable = 'cppcheck'
 let g:ale_c_cppcheck_options = '--enable=style'
@@ -118,7 +131,7 @@ let g:ale_echo_cursor = 1
 let g:ale_echo_msg_error_str = 'Error'
 let g:ale_echo_msg_format = '%s'
 let g:ale_echo_msg_warning_str = 'Warning'
-let g:ale_enabled = 1
+let g:ale_enabled = 0
 let g:ale_fix_on_save = 0
 let g:ale_fixers = {}
 let g:ale_keep_list_window_open = 0
@@ -134,10 +147,6 @@ let g:ale_set_loclist = 1
 let g:ale_set_quickfix = 0
 let g:ale_set_signs = 1
 let g:ale_sign_column_always = 0
-let g:ale_sign_error = '>>'
-let g:ale_sign_offset = 1000000
-let g:ale_set_loclist = 1
-let g:ale_set_quickfix = 0
 let g:ale_set_signs = 1
 let g:ale_sign_column_always = 0
 let g:ale_sign_error = '>>'
@@ -147,7 +156,7 @@ let g:ale_statusline_format = ['%d error(s)', '%d warning(s)', 'OK']
 let g:ale_warn_about_trailing_whitespace = 0
 
 "airline
-let g:airline_theme='deus'
+let g:airline_theme='distinguished'
 let g:airline#extensions#ale#enabled = 1
 let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
@@ -184,9 +193,12 @@ let g:deoplete#auto_complete_delay = 25
 "use tab key
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 "deoplete-clang
-let g:deoplete#sources#clang#libclang_path = '/usr/local/lib/libclang.so.5.0'
+let g:deoplete#sources#clang#libclang_path = '/usr/local/lib/libclang.so.6.0'
 let g:deoplete#sources#clang#clang_header = '/usr/local/lib/clang/'
 
+let g:NERDSpaceDelims = 1
+let g:NERDCompactSexyComs = 1
+let g:NERDCommentEmptyLines = 1
 
 "{{{Search:
   "highlight searches make line blink
@@ -227,10 +239,15 @@ nnoremap <Leader>fs :w<CR>
 nnoremap <leader>m :MRU<CR>
 nnoremap <Leader>qq :q!<CR>
 nnoremap <leader>bd :bd<CR>
-nnoremap <leader>ff :CtrlP ~/<CR>
-nnoremap <leader>bb :CtrlPBuffer<CR>
+nnoremap <leader>ff :Files<CR>
+nnoremap <leader>bb :Buffers<CR>
 nnoremap <leader>% :vsp<CR>
 nnoremap <leader>" :sp<CR>
+nnoremap <leader>wd <C-W>c
+nnoremap <leader>tl :lopen<CR>
+nnoremap <leader>tld :lclose<CR>
+nnoremap <leader>tln :lnext<CR>
+nnoremap <leader>tlp :lprevious<CR>
 
 "paste multiple lines multiple times with simple ppppp.
 vnoremap <silent> y y`]
@@ -248,7 +265,7 @@ nnoremap <leader>nt :NERDTree<CR>
 nnoremap <leader>ar :Ranger<CR>
 map <leader><leader>as :Assembly<CR>
 
-nnoremap <Leader>' :terminal<CR>
+nnoremap <Leader>' :below 10sp term://$SHELL<cr>i
 "reopen previously opened file
 nnoremap <Leader><Leader> :e#<CR>
 " Search for selected text, forwards or backwards.
@@ -282,7 +299,7 @@ xmap <C-k>     <Plug>(neosnippet_expand_target)
 "_________________________________________________________________
 
 "Reader Mode with goyo+limelight
-function! s:goyo_enter()
+function! s:goyo_enter() abort
       silent !tmux set status off
       silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
       set scrolloff=999
@@ -290,15 +307,15 @@ function! s:goyo_enter()
       Limelight 0.7
 endfunction      
 
-function! s:goyo_leave()
+function! s:goyo_leave() abort
       silent !tmux set status on
       silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
       set scrolloff=7
-      colorscheme molokai 
+      colorscheme flatdark
       Limelight!
 endfunction
 
-func! CompileRunGcc()
+func! CompileRunGcc() abort
     exec "w"
     exec "!gcc % -o %<"
     exec "! ./%<"
@@ -337,7 +354,7 @@ function! MyFiletype()
 
 
 "translate-de-en:
-  function! Translate(text, to_lang)
+  function! Translate(text, to_lang) abort
       if a:to_lang ==? "de"
           exe "!trans -b en:de \"" . a:text . "\""
       else
@@ -347,7 +364,7 @@ function! MyFiletype()
 
   "{{{Lines-Toggle:
   " toggle between number and relative number on ,l
-  function! NumberToggle()
+  function! NumberToggle() abort
       if(&number == 1)
           set number!
           set relativenumber!
@@ -365,7 +382,7 @@ function! MyFiletype()
    "{{{ Handle tabstop, softtabstop and shiftwidth
 
   command! -nargs=* Stab call Stab()
-  function! Stab()
+  function! Stab() abort
       let l:tabstop = 1 * input('set tabstop = softtabstop = shiftwidth = ')
       if l:tabstop > 0
           let &l:sts = l:tabstop

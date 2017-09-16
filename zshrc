@@ -1,33 +1,67 @@
-#alias qmake='qmake-qt4'
 export ZSH=~/.oh-my-zsh
-export HISTFILESIZE=5000
-#export PATH="/usr/lib/ccache/bin/:$PATH"
+export HISTFILESIZE=1000
+
 #export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
-# export PATH=~/.npm-global/bin:$PATH
 #umask =
-ZSH_THEME="af-magic"
+ZSH_THEME="spaceship"
+SPACESHIP_PROMPT_ORDER=(
+  user
+  host
+  dir
+  git
+  package
+  line_sep
+  exec_time
+  exit_code
+  char
+  )
 
-plugins=(git sudo colorize colored-man docker \
-     copyfile zsh-syntax-highlighting)
+SPACESHIP_PROMPT_ADD_NEWLINE=true
+SPACESHIP_EXEC_TIME_SHOW=false
+SPACESHIP_EXEC_TIME_ELAPSED=240
+SPACESHIP_PROMPT_SEPARATE_LINE=true
 
-export PATH="/usr/local/sbin:/usr/local/bin:/bin:/usr/bin:/usr/sbin:/usr/lib/plan9/bin"
+#POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
+#POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs)
+#POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=5
+#POWERLEVEL9K_COMMAND_EXECUTION_TIME_PRECISION=1
+#POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
+#POWERLEVEL9K_DIR_HOME_BACKGROUND='002'
+#POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND='010'
+#POWERLEVEL9K_DIR_HOME_DEFAULT_BACKGROUND='160'
+#POWERLEVEL9K_SHORTEN_STRATEGY=truncate_from_right
+#POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+
+plugins=(sudo cp colorize\
+     copyfile fast-syntax-highlighting)
+#ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+#ZSH_AUTOSUGGEST_USE_ASYNC=1
+
+
+#export PATH="~/bin:/usr/local/sbin:/usr/local/bin:/bin:/usr/bin:/usr/sbin:/bin:/sbin:/usr/X11R6/bin"
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --no-messages --glob "!.git/*"'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="bfs -type d -nowarn"
+export FZF_DEFAULT_OPTS='--bind tab:down,shift-tab:up'
 
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 export UPDATE_ZSH_DAYS=5
-export GOPATH=$HOME/.go
+#export GOPATH=$HOME/.go
+export NO_AT_BRIDGE=1
 
 if [[ -n $SSH_CONNECTION ]]; then
     export EDITOR='vim'
 else
     export EDITOR='vim'
 fi
+
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
-export TERMINAL='st'
-export BROWSER='surf'
+export TERMINAL='urxvt'
+export BROWSER='chrome'
 
-# DISABLE_AUTO_TITLE="true"
+DISABLE_AUTO_TITLE="true"
 # ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 
@@ -43,47 +77,53 @@ source $ZSH/oh-my-zsh.sh
 #########
 #helpers#
 #########
-alias ss='eval `slmenu < .progs.txt`'
+alias ss='eval `slmenu < ~/.progs.txt`'
 alias tpeon='sudo sysctl -w kernel.grsecurity.tpe=1'
 alias tpeoff='sudo sysctl -w kernel.grsecurity.tpe=0'
 alias update-grub='grub-mkconfig -o /boot/grub/grub.cfg'
 alias paxflags='sudo setfattr -n user.pax.flags -v m'
 #alias clearram='sudo sh -c "sync; echo 3 > /proc/sys/vm/drop_caches"'
-alias itest='ping -c3 www.google.com'
+alias itest='ping -c2 www.google.com'
 alias loadbat='sudo /usr/sbin/tlp fullcharge BAT0 '
 alias bat='sudo tlp-stat -b'
-alias xmod='setxkbmap -option 'ctrl:nocaps' && xmodmap ~/.Xmodmap'
+#alias xmod='setxkbmap -option 'ctrl:nocaps' && xmodmap ~/.Xmodmap'
 alias psg='ps aux | grep -v grep | grep -i -e VSZ -e'
 alias psc='ps xawf -eo pid,user,cgroup,args'
 alias h='xbacklight -set'
-alias wifi='sudo ip link set wlan0'
-alias a='abduco'
-alias ac='abduco -cf'
-alias aa='abduco -a'
+#alias wifi='ip link set wlan0'
+alias a='tmux list-sessions'
+alias ac='tmux new -s'
+alias aa='tmux attach -t'
+alias cvsupdate='doas cvs -q up -Pd'
+alias giturl='git config --get remote.origin.url'
+alias killall='skill'
+alias mus='ncmpc'
+alias tup='tmuxinator start'
+alias tdown='tmuxinator stop'
 #########
 #basics #
 #########
-alias rm='trash -v'
+#alias rm='trash -v'
 #alias sudo='pkexec --user root'
-alias e='exit'
-alias vi='vim'
-alias sudo='sudo '
+alias e='echo 'detach''
+alias vi='doas vim'
+alias vim='nvim'
+alias sudo='doas'
 alias free='free -h'
-alias df='df -Th --total'
+alias df='df -h'
 #alias ls='ls -FX --color=always'
-alias ls='ls -h --color  --group-directories-first'
+alias ls='gls -h --color  --group-directories-first'
 #alias scan='sudo wifi-menu'
 alias cp='cp -i'
-alias hig='history | grep'
+alias hig='history | grep -i'
 alias c='clear'
 alias man='vman'
 compdef vman="man"
 alias f='ranger'
 alias we='wget'
 alias gcc='gcc -Wall -std=gnu99'
-alias mkdir='mkdir -pv'
+alias mkdir='mkdir -p'
 alias uptime='uptime -p'
-alias mpv='abduco -cf mpv mpv'
 ##############
 #Init Systems#
 ##############
@@ -98,22 +138,22 @@ alias mpv='abduco -cf mpv mpv'
 #alias mask='sudo systemctl mask'
 #alias unmask='sudo systemctl unmask'
 #openrc
- alias journal='[ -f /usr/sbin/journalctl ] && journalctl -r || sudo vim /var/log/syslog'
-alias service='sudo rc-service'
+#alias service='sudo rc-service'
 ##############
 #applications#
 ##############
 #alias hn='/opt/hnwatch'
 #alias weather='~/.go/bin/wego'
-alias yt='abduco -cf youtube youtube-dl'
-alias rtv='firejail rtv'
+alias yt='youtube-dl'
+#alias rtv='firejail rtv'
 alias de='trans en:de'
 alias fran='trans en:fr'
 alias russ='trans en:russ'
 alias eng='trans de:en'
-alias yv='abduco -c yv youtube-viewer -C'
+#alias yv='abduco -c yv youtube-viewer -C'
 alias ytmp3='youtube-dl --extract-audio --audio-format mp3 --prefer-ffmpeg'
-alias newsbeuter='abduco -c news newsbeuter'
+#alias newsbeuter='abduco -c news newsbeuter'
+
 ################
 #packagemanager#
 ################
@@ -123,61 +163,82 @@ alias newsbeuter='abduco -c news newsbeuter'
 #alias install='sudo dnf install'
 #alias remove='sudo dnf remove'
 #alias installed='dnf list installed | grep -i'
-##pacman##
-#alias clean='sudo pacman -Rns $(pacman -Qdtq)'
-#alias update='sudo  reflector --verbose --country '' -l 25 -p http --sort rate --save /etc/pacman.d/mirrorlist && yaourt -Syyua'
-#gentoo-emerge
-alias search='emerge --search'
-alias ssearch='emerge -S'
-alias install='sudo emerge --ask --verbose'
-alias remove='sudo emerge -cav'
-alias update1='emerge --ask --update --ask @world'
-alias update2='emerge --ask --update --deep @world'
-alias update3='emerge --ask --update --deep --with-bdeps=y @world'
-alias update4='sudo emerge --verbose --ask --update --deep --with-bdeps=y --newuse @world'
-#equery
-alias eqf='equery f'
-alias equ='equery u'
-alias eqh='equery h'
-alias eqa='equery a'
-alias eqb='equery b'
-alias eql='equery l'
-alias eqd='equery d'
-alias eqg='equery g'
-alias eqc='equery c'
-alias eqk='equery k'
-alias eqm='equery m'
-alias eqy='equery y'
-alias eqs='equery s'
-alias eqw='equery w'
 
+#gentoo-emerge
+#alias update1='emerge --ask --update --ask @world'
+#alias update2='emerge --ask --update --deep @world'
+#alias update3='emerge --ask --update --deep --with-bdeps=y @world'
+#alias update4='sudo emerge --verbose --ask --update --deep --with-bdeps=y --newuse @world'
+#equery
+#alias eqf='equery f'
+#alias equ='equery u'
+#alias eqh='equery h'
+#alias eqa='equery a'
+#alias eqb='equery b'
+#alias eql='equery l'
+#alias eqd='equery d'
+#alias eqg='equery g'
+#alias eqc='equery c'
+#alias eqk='equery k'
+#alias eqm='equery m'
+#alias eqy='equery y'
+#alias eqs='equery s'
+#alias eqw='equery w'
 
 #functions
-vman() {
-    vim -c "SuperMan $*"
+function install() {
+    if [[ -a /usr/sbin/pkg_add ]]; then
+        doas pkg_add -Uivv $@
+    elif [[ -a /usr/bin/emerge ]]; then
+        sudo emerge --ask --verbose $@
+    elif [[ -a /usr/bin/xbps-install ]]; then
+        sudo xbps-install -S $@
+    else
+        echo 'no package manager found'
+    fi
+    }
+
+function search() {
+    if [[ -a /usr/sbin/pkg_info ]]; then
+        pkg_info -Q $@
+    elif [[ -a /usr/bin/emerge ]]; then
+        emerge --search $@
+    else
+        echo 'no package manager found'
+    fi
+}
+
+function remove() {
+    if [[ -a /usr/sbin/pkg_delete ]]; then
+        doas pkg_delete $@
+    elif [[ -a /usr/bin/emerge ]]; then
+        sudo emerge -cav $@
+    else
+        echo 'no package manager found'
+    fi
+}
+
+function vman() {
+    /usr/local/bin/vim -c "SuperMan $*"
 
     if [ "$?" != "0"  ]; then
         echo "No manual entry for $*"
     fi
 }
 
-function ranger {
-tempfile=$(mktemp /tmp/ranger-dirXXX)
-/usr/bin/ranger --choosedir="$tempfile" "${@:-$(pwd)}"
-test -f "$tempfile" &&
-    if [ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]; then
-        echo "$(cat "$tempfile")"
-        cd -- "$(cat "$tempfile")"
-    fi
-    rm -f -- "$tempfile"
+function vol() {
+    mixerctl outputs.master="$@,$@"
 }
 
-function hh() {
-    CMD=$(history | dmenu -l 50 | awk '{ print substr($0, index($0,$2)) }')
-    eval $CMD
+function rm() {
+    mv $@ ~/.Trash/files
 }
 
-google () {
+function zathura() {
+    zathura $@ &
+}
+
+function google () {
     u=`perl -MURI::Escape -wle 'print "http://google.com/search?q=".
     uri_escape(join " ",  @ARGV)' $@`
     /usr/bin/w3m -F $u
@@ -218,4 +279,11 @@ function extract {
     fi
 }
 
-bindkey -s '^o' '/usr/local/bin/fsh'
+function trestart() {
+    tmuxinator stop $@
+    tmuxinator start $@
+}
+
+source "/home/user/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
