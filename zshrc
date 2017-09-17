@@ -96,7 +96,6 @@ alias ac='tmux new -s'
 alias aa='tmux attach -t'
 alias cvsupdate='doas cvs -q up -Pd'
 alias giturl='git config --get remote.origin.url'
-alias killall='skill'
 alias mus='ncmpc'
 alias tup='tmuxinator start'
 alias tdown='tmuxinator stop'
@@ -111,8 +110,6 @@ alias vim='nvim'
 alias sudo='doas'
 alias free='free -h'
 alias df='df -h'
-#alias ls='ls -FX --color=always'
-alias ls='gls -h --color  --group-directories-first'
 #alias scan='sudo wifi-menu'
 alias cp='cp -i'
 alias hig='history | grep -i'
@@ -186,6 +183,22 @@ alias ytmp3='youtube-dl --extract-audio --audio-format mp3 --prefer-ffmpeg'
 #alias eqw='equery w'
 
 #functions
+function ls(){
+    if [[ -a /usr/local/bin/gls ]]; then
+        gls -h --color  --group-directories-first $@
+    elif [[ -a /bin/ls ]];  then 
+        /bin/ls -h --color --group-directories-first $@
+    fi
+}
+
+function killall(){
+    if [[ -a /bin/killall ]]; then
+        /bin/killall $@
+    elif [[ -a /usr/local/bin/skill ]]; then
+        skill $@
+    fi
+}
+
 function install() {
     if [[ -a /usr/sbin/pkg_add ]]; then
         doas pkg_add -Uivv $@
@@ -203,6 +216,8 @@ function search() {
         pkg_info -Q $@
     elif [[ -a /usr/bin/emerge ]]; then
         emerge --search $@
+    elif [[ -a /bin/xbps-query ]]; then
+        xbps-query -Rs $@
     else
         echo 'no package manager found'
     fi
@@ -213,6 +228,8 @@ function remove() {
         doas pkg_delete $@
     elif [[ -a /usr/bin/emerge ]]; then
         sudo emerge -cav $@
+    elif [[ -a /bin/xbps-remove ]]; then
+        doas xbps-remove -R $@
     else
         echo 'no package manager found'
     fi
@@ -284,6 +301,10 @@ function trestart() {
     tmuxinator start $@
 }
 
-source "/home/user/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
+source "/home/${USER}/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+if [[ -a /bin/xbps-install ]]; then
+    . /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
 
