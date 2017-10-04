@@ -5,18 +5,20 @@
 ! These options only take effect on startup.
 st.termname:     xterm-256color
 ! if you do not set shell, precedence is: -e arg, utmp option, SHELL env var, /etc/passwd shell
-st.shell:        /usr/local/bin/fish
-!st.shell: /bin/ksh
+st.shell:        /usr/local/bin/zsh
+!st.shell: /usr/local/bin/zsh
 
 ! The following options options can be reloaded via USR1 signal.
-!st.font:        Roboto Mono for Powerline:pixelsize=15:antialias=true:autohint=true;
-st.font:         Fira Mono for Powerline:Regular:pixelsize=14:antialias=true:autohint=true;
+!st.font:        Roboto Mono Medium for Powerline:pixelsize=15:antialias=true:autohint=true;
+!st.font:         Fira Mono for Powerline:Regular:pixelsize=14:antialias=true:autohint=true;
+
 !URxvt.font: xft:Fira Mono for Powerline:size=11
 !URxvt.boldFont:xft:Fira Mono for Powerline:size=11
 URxvt.font: xft:FuraMonoforPowerline Nerd Font:size=11
 URxvt.boldFont: xft:FuraMonoforPowerline Nerd Font:Regular:size=11
 
-!st.font:         Fantasque Sans Mono:Regular:pixelsize=16:antialias=true:autohint=true;
+st.font:         Fantasque Sans Mono:Regular:pixelsize=16:antialias=true:autohint=true;
+!st.font:		Input Mono:Regular:pixelsize=14:antialias=true:autohint=true;
 st.borderpx:    2
 ! Available cursor values: 2 4 6 7 = █ _ | ☃ ( 1 3 5 are blinking versions)
 st.cursorshape:  2
@@ -35,27 +37,80 @@ st.prompt_char:  $
 
 ! opacity==255 means what terminal will be not transparent, 0 - fully transparent
 st.opacity:      255
-! Defaults taken from base16-twilight st.colorscheme.
-st.foreground:   #CEDBCA
-st.background:   #151B1A
 
-st.color0:       #2E2B38
-st.color1:       #991414
-st.color2:       #7A8C54
-st.color3:       #9E6438
-st.color4:       #55839E
-st.color5:       #9D916B
-st.color6:       #536556
-st.color7:       #828181
-st.color8:       #161717
-st.color9:       #A86D56
-st.color10:      #9FB274
-st.color11:      #B29F5E
-st.color12:      #507A91
-st.color13:      #B89855
-st.color14:      #7E9982
-st.color15:      #E3E3D1
+!"Evabeam green"
+!st.foreground:   #CEDBCA
+!st.background:   #151B1A
 
+!st.color0:       #2E2B38
+!st.color1:       #991414
+!st.color2:       #7A8C54
+!st.color3:       #9E6438
+!st.color4:       #55839E
+!st.color5:       #9D916B
+!st.color6:       #536556
+!st.color7:       #828181
+!!st.color8:       #161717
+!st.color8:       #4c5c5c
+!st.color9:       #A86D56
+!st.color10:      #9FB274
+!st.color11:      #B29F5E
+!st.color12:      #507A91
+!st.color13:      #B89855
+!st.color14:      #7E9982
+!st.color15:      #E3E3D1
+
+!Flatcolor
+st.foreground:   #cbe3e7
+st.background:   #1e1c31
+st.cursorColor:  #fbfcfc
+st.cursorfg: #ff8080
+st.reverse-cursor:	#ffffff
+! black
+st.color0:       #565575
+st.color8:       #100e23
+! red
+st.color1:       #ff8080
+st.color9:       #ff5458
+! green
+st.color2:       #95ffa4
+st.color10:      #62d196
+! yellow
+st.color3:       #ffe9aa
+st.color11:      #ffb378
+! blue
+st.color4:       #91ddff
+st.color12:      #65b2ff
+! magenta
+st.color5:       #c991e1
+st.color13:      #906cff
+! cyan
+st.color6:       #aaffe4
+st.color14:      #63f2f1
+! white
+st.color7:       #cbe3e7
+st.color15:      #a6b3cc
+
+!Gotham
+!st.foreground:   #98d1ce
+!st.background:   #0a0f14
+!st.cursorColor:  #98d1ce
+!st.color0:       #0a0f14
+!st.color8:       #10151b
+!st.color1:       #c33027
+!st.color9:       #d26939
+!st.color2:       #26a98b
+!st.color10:      #081f2d
+!st.color3:       #edb54b
+!st.color11:      #245361
+!st.color4:       #195465
+!st.color12:      #093748
+!st.color5:       #4e5165
+!st.color13:      #888ba5
+!st.color6:       #33859d
+!st.color14:      #599caa
+!st.color7:       #98d1ce
+!st.color15:      #d3ebe9
 !urxvt
 URxvt.letterSpace: -1
 URxvt*termName: screen-256color
@@ -64,36 +119,64 @@ URxvt*colorUL:  yellow
 URxvt*underlineColor:  yellow
 URxvt*saveLines: 1035 
 
-*background: #151B1A
-*foreground: #CEDBCA
+!*background: #151B1A
+!*foreground: #CEDBCA
 
 ! Alternate foreground
 !*foreground: #7E9982
 
-*cursorColor: #9E6438
+!*cursorColor: #9E6438
 
-*color0: #2E2B38
-*color1: #991414
-*color2: #7A8C54
-*color3: #9E6438
-*color4: #395667
-*color5: #9D916B
-*color6: #536556
-*color7: #828181
-*color8: #474159
-*color9: #A86D56
-*color10: #9FB274
-*color11: #B29F5E
-*color12: #507A91
-*color13: #B89855
-*color14: #7E9982
-*color15: #BDBDA4
+!*color0: #2E2B38
+!*color1: #991414
+!*color2: #7A8C54
+!*color3: #9E6438
+!*color4: #395667
+!*color5: #9D916B
+!*color6: #536556
+!*color7: #828181
+!*color8: #474159
+!*color9: #A86D56
+!*color10: #9FB274
+!*color11: #B29F5E
+!*color12: #507A91
+!*color13: #B89855
+!*color14: #7E9982
+!*color15: #BDBDA4
 !urxvt*depth: 32
 !urxvt*background: rgba:0000/0000/0200/c800
 URxvt.scrollBar: false
-URxvt*fading: 35
+URxvt*fading: 10
 *URxvt.perl-ext-common:		osc-xterm-clipboard
+URxvt*cursorBlink: false
+URxvt.internalBorder: 2
+*.foreground:   #98d1ce
+*.background:   #0a0f14
+*.cursorColor:  #98d1ce
 
+*.color0:       #0a0f14
+*.color8:       #10151b
+
+*.color1:       #c33027
+*.color9:       #d26939
+
+*.color2:       #26a98b
+*.color10:      #081f2d
+
+*.color3:       #edb54b
+*.color11:      #245361
+
+*.color4:       #195465
+*.color12:      #093748
+
+*.color5:       #4e5165
+*.color13:      #888ba5
+
+*.color6:       #33859d
+*.color14:      #599caa
+
+*.color7:       #98d1ce
+*.color15: #d3ebe9
 !xterm
 XTerm*faceName: Bitstream Vera Serif Mono
 xterm*faceSize: 11
@@ -103,5 +186,6 @@ xterm*loginShell: true
 xterm*charClass: 33:48,35:48,37:48,43:48,45-47:48,64:48,95:48,126:48
 xterm*termName: xterm-color
 xterm*eightBitInput: false
+xterm*ScrollBar: false
 
 

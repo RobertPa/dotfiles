@@ -2,16 +2,26 @@
 
 NUTZER="user"
 HOMED="/home/${NUTZER}"
-
-#create directories
-#mkdir -p "${HOMED}/test"
-#mkdir -p "${HOMED}/.config/fish/functions"
-#mkdir -p "${HOMED}/.config/mpv"
-#mkdir -p "${HOMED}/.config/ranger"
-#mkdir -p "${HOMED}/Downloads/software_sources"
-#mkdir -p "${HOMED}/.newsbeuter"
+export PKG_PATH=http://ftp.fau.de/pub/OpenBSD/snapshots/packages/amd64/
+create directories(){
+mkdir -p "${HOMED}/test"
+mkdir -p "${HOMED}/.config/fish/functions"
+mkdir -p "${HOMED}/.config/mpv"
+mkdir -p "${HOMED}/.config/ranger"
+mkdir -p "${HOMED}/Downloads/software_sources"
+mkdir -p "${HOMED}/.newsbeuter"
+}
 
 pkg_add git curl
+
+get_zsh(){
+	pkg_add zsh
+	sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+	chsh -s /usr/local/zsh ${NUTZER}
+	mkdir -p ${HOMED}/.oh-my-zsh/custom/themes
+	curl -o - https://raw.githubusercontent.com/denysdovhan/spaceship-zsh-theme/master/install.zsh | zsh
+
+}
 
 get_dotfiles(){
 cd ${HOMED}/Downloads
@@ -26,6 +36,7 @@ cp -i ./mpv.conf ${HOMED}/.config/mpv
 cp -i ./spectrwm.conf ${HOMED}/.spectrwm.conf
 cp -i ./Xresources ${HOMED}/.Xressources
 cp -i ./capsswitch ${HOMED}/.capsswitch
+cp -i ./zshrc ${HOMED}/.zshrc
 cp ./functions/* ${HOMED}/.config/fish/functions
 }
 
@@ -40,6 +51,15 @@ cvs -qd anoncvs@anoncvs.ca.openbsd.org:/cvs get -P ports
 cvs -qd anoncvs@anoncvs.ca.openbsd.org:/cvs get -P xenocara
 }
 
+doas_config(){
+echo " 
+permit persist keepenv :wheel
+permit nopass keepenv root
+permit nopass ${NUTZER} as root cmd mount
+permit nopass ${NUTZER} as root cmd umount
+permit nopass ${NUTZER} as root cmd reboot
+permit nopass ${NUTZER} as root cmd halt"
+}
 
 pkg_add -l ${HOMED}/Downloads/dotfiles/basic_pkgs_openbsd
 

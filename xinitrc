@@ -17,8 +17,8 @@ echo 'IP' $(curl -s http://whatismyip.akamai.com)
 #    done &
 
 export EDITOR="vim"
-export BROWSER="chrome"
-PKG_PATH=http://mirror.hs-esslingen.de/pub/OpenBSD/snapshots/packages/amd64/
+export BROWSER="firefox"
+PKG_PATH=http://ftp.fau.de/pub/OpenBSD/snapshots/packages/amd64/
 export PKG_PATH
 export PARALLEL_BUILD=Yes 
 export MAKE_JOBS=8 
@@ -41,9 +41,8 @@ nitrogen --restore &
 #xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Button" 2
 #xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Timeout" 200
 #xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Axes" 6 7 4 5
-compton -CGb
+#compton -CGb
 tmuxinator base
 #exec dwm
 exec spectrwm
-#exec ck-launch-session dbus-launch --sh-syntax --exit-with-session dwm
 

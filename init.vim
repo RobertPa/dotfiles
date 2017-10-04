@@ -26,24 +26,39 @@ Plug 'zchee/deoplete-clang',{ 'for': ['c', 'cpp'] }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'airblade/vim-rooter'
+Plug 'dhruvasagar/vim-table-mode'
+Plug 'takac/vim-hardtime'
 "Colors
+"Plug 'morhetz/gruvbox'
+Plug 'whatyouhide/vim-gotham'
 Plug 'MaxSt/FlatColor'
 Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'joshdick/onedark.vim'
+"Plug 'preocanin/greenwint'
+Plug 'tyrannicaltoucan/vim-quantum'
 "Plug 'tomasr/molokai'
+"Plug 'altercation/vim-colors-solarized'
+"Plug 'NLKNguyen/papercolor-theme'
+"seoul256-light
+"Plug 'junegunn/seoul256.vim'
 call plug#end()
+set inccommand=split
+
+let g:hardtime_default_on = 1
 
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-"gruvbox, triplejelly,molokai,PaperColor
 set background=dark
 colorscheme flatcolor
 "let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 "set termguicolors
+"let g:gruvbox_contrast_dark = 'medium'
 
+set relativenumber
+set listchars=tab:>\ ,eol:¬
 se title
 set t_Co=256
 set encoding=utf-8
@@ -68,7 +83,7 @@ set incsearch
 
 set tabstop=4
 set softtabstop=4
-set expandtab
+"set expandtab
 set shiftwidth=4
 set scrolloff=7
 
@@ -87,6 +102,7 @@ set clipboard+=unnamedplus
 
 hi CursorLineNr ctermfg=blue
 
+let g:table_mode_header_fillchar='='
 let delimitMate_expand_cr = 1
 let delimitMate_expand_space = 1
 
@@ -248,6 +264,8 @@ nnoremap <leader>tl :lopen<CR>
 nnoremap <leader>tld :lclose<CR>
 nnoremap <leader>tln :lnext<CR>
 nnoremap <leader>tlp :lprevious<CR>
+nnoremap <leader>/ :BLines<CR>
+nnoremap <leader>ti :set list!<CR>
 
 "paste multiple lines multiple times with simple ppppp.
 vnoremap <silent> y y`]
@@ -261,11 +279,10 @@ nnoremap <silent> zd :call Translate(expand("<cword>"), "de")<CR> nnoremap <sile
 map <F9> :call CompileRunGcc()<CR>
 
 nnoremap <leader>tn :call NumberToggle()<CR>
-nnoremap <leader>nt :NERDTree<CR>
-nnoremap <leader>ar :Ranger<CR>
 map <leader><leader>as :Assembly<CR>
 
-nnoremap <Leader>' :below 10sp term://$SHELL<cr>i
+"open Terminal
+nnoremap <Leader>' :below 20sp term://$SHELL<cr>i
 "reopen previously opened file
 nnoremap <Leader><Leader> :e#<CR>
 " Search for selected text, forwards or backwards.
@@ -311,7 +328,7 @@ function! s:goyo_leave() abort
       silent !tmux set status on
       silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
       set scrolloff=7
-      colorscheme flatdark
+      colorscheme flatcolor
       Limelight!
 endfunction
 
@@ -420,6 +437,9 @@ function! MyFiletype()
 
 ""Autocommands
 "autocmd CompleteDone * silent! pclose!
+
+"":autocmd InsertEnter * set cul
+"":autocmd InsertLeave * set nocul
 
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
