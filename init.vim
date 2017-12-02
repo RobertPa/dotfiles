@@ -28,6 +28,10 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'airblade/vim-rooter'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'takac/vim-hardtime'
+Plug 'justinmk/vim-dirvish'
+Plug 'tpope/vim-eunuch'
+"Plug 'ntpeters/vim-better-whitespace'
+
 "Colors
 "Plug 'morhetz/gruvbox'
 Plug 'whatyouhide/vim-gotham'
@@ -45,14 +49,15 @@ call plug#end()
 set inccommand=split
 
 let g:hardtime_default_on = 1
-
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 set background=dark
-colorscheme flatcolor
+colorscheme gotham 
 "let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 "set termguicolors
 "let g:gruvbox_contrast_dark = 'medium'
@@ -63,9 +68,9 @@ se title
 set t_Co=256
 set encoding=utf-8
 scriptencoding utf-8
-set shell=/usr/local/bin/fish
+set shell=/bin/zsh
 set dictionary=/usr/share/dict/words
-
+set winminheight=0
 filetype on
 
 set number
@@ -109,7 +114,7 @@ let delimitMate_expand_space = 1
 let g:rooter_change_directory_for_non_project_files = 'home'
 let g:rooter_manual_only = 1
 
-let g:tagbar_ctags_bin = '/usr/local/bin/ectags'
+let g:tagbar_ctags_bin = '/usr/bin/ctags'
 "let g:AutoPairsFlyMode = 1
 let g:goyo_width = 160
 let g:ranger_map_keys = 0
@@ -172,7 +177,8 @@ let g:ale_statusline_format = ['%d error(s)', '%d warning(s)', 'OK']
 let g:ale_warn_about_trailing_whitespace = 0
 
 "airline
-let g:airline_theme='distinguished'
+let g:airline_theme='gotham'
+let g:airline#extensions#whitespace#checks = [ 'trailing' ]
 let g:airline#extensions#ale#enabled = 1
 let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
@@ -209,8 +215,8 @@ let g:deoplete#auto_complete_delay = 25
 "use tab key
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 "deoplete-clang
-let g:deoplete#sources#clang#libclang_path = '/usr/local/lib/libclang.so.6.0'
-let g:deoplete#sources#clang#clang_header = '/usr/local/lib/clang/'
+let g:deoplete#sources#clang#libclang_path = '/usr/lib/llvm/5/lib64/libclang.so'
+let g:deoplete#sources#clang#clang_header = '/usr/lib/clang/'
 
 let g:NERDSpaceDelims = 1
 let g:NERDCompactSexyComs = 1
@@ -248,6 +254,7 @@ let g:NERDCommentEmptyLines = 1
 "noremap <F5> :Autoformat<CR>
 noremap <F5> :ClangFormat<CR>
 
+map <F11> <C-W>_<C-W><Bar>
 nmap <Leader><Leader> V
 vmap v <Plug>(expand_region_expand)
 
@@ -282,7 +289,7 @@ nnoremap <leader>tn :call NumberToggle()<CR>
 map <leader><leader>as :Assembly<CR>
 
 "open Terminal
-nnoremap <Leader>' :below 20sp term://$SHELL<cr>i
+nnoremap <Leader>' :below 15sp term://$SHELL<cr>i
 "reopen previously opened file
 nnoremap <Leader><Leader> :e#<CR>
 " Search for selected text, forwards or backwards.
@@ -298,10 +305,6 @@ vnoremap <silent> # :<C-U>
   \gV:call setreg('"', old_reg, old_regtype)<CR>
 
 vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
-
-"copy/paste everything to/from system-clipboard
-vmap <leader>y :call system("xclip -i -selection clipboard", getreg("\""))<CR>:call system("xclip -i", getreg("\""))<CR>
-nmap <Leader>p :call setreg("\"",system("xclip -o -selection clipboard"))<CR>p
 
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
               \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"

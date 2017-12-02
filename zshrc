@@ -1,13 +1,13 @@
 export ZSH=~/.oh-my-zsh
-export HISTFILESIZE=5000
-export Qt5Core_DIR=/usr/local/lib/qt5/cmake
-export Qt5Widgets_DIR=/usr/local/lib/qt5/cmake
-export Qt5Network_DIR=/usr/local/lib/qt5/cmake
-export Qt5Test_DIR=/usr/local/lib/qt5/cmake
-export PKG_PATH=http://ftp.fau.de/pub/OpenBSD/snapshots/packages/amd64/
+export HISTFILESIZE=10000
+#export Qt5Core_DIR=/usr/local/lib/qt5/cmake
+#export Qt5Widgets_DIR=/usr/local/lib/qt5/cmake
+#export Qt5Network_DIR=/usr/local/lib/qt5/cmake
+#export Qt5Test_DIR=/usr/local/lib/qt5/cmake
+#export PKG_PATH=http://ftp.fau.de/pub/OpenBSD/snapshots/packages/amd64/
 #export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 #umask =
-setopt EXTENDED_HISTORY
+export PAGER=less
 setopt HIST_EXPIRE_DUPS_FIRST
 setopt HIST_IGNORE_DUPS
 setopt HIST_IGNORE_ALL_DUPS
@@ -49,12 +49,14 @@ plugins=(sudo cp colorize\
 #ZSH_AUTOSUGGEST_USE_ASYNC=1
 
 
-#export PATH="~/bin:/usr/local/sbin:/usr/local/bin:/bin:/usr/bin:/usr/sbin:/bin:/sbin:/usr/X11R6/bin"
+export PATH="usr/local/sbin:/usr/local/bin:/bin:/usr/bin:/usr/sbin:/bin:/sbin"
+export PATH=$PATH:$HOME/bin
+export PATH=$PATH:/opt/void-packages
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --no-messages --glob "!.git/*"'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_COMMAND="bfs -type d -nowarn 2> /dev/null"
+export FZF_ALT_C_COMMAND="fd -H -t d ."
+#export FZF_ALT_C_COMMAND="bfs -type d -nowarn 2> /dev/null"
 export FZF_DEFAULT_OPTS='--bind tab:down,shift-tab:up'
-
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 export UPDATE_ZSH_DAYS=5
@@ -69,8 +71,9 @@ fi
 
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
-export TERMINAL='urxvt'
+export TERMINAL='st'
 export BROWSER='firefox'
+export BROWSERCLI='w3m'
 
 DISABLE_AUTO_TITLE="true"
 # ENABLE_CORRECTION="true"
@@ -115,12 +118,12 @@ alias xc='xclip -o'
 #basics #
 #########
 alias e='echo 'detach''
-alias vi='doas vim'
+#alias vi='doas vim'
 alias vim='nvim'
 if [[ -a /usr/bin/pkg_add ]]; then
 	alias sudo='doas'
 fi
-alias sudo='doas'
+alias sudo='sudo '
 alias free='free -h'
 alias df='df -h'
 #alias scan='sudo wifi-menu'
@@ -133,7 +136,7 @@ alias f='ranger'
 alias we='wget'
 alias gcc='gcc -Wall -std=gnu99'
 alias mkdir='mkdir -p'
-alias htop='top'
+#alias htop='top'
 ##############
 #Init Systems#
 ##############
@@ -160,34 +163,32 @@ alias de='trans en:de'
 alias fran='trans en:fr'
 alias russ='trans en:russ'
 alias eng='trans de:en'
-#alias yv='abduco -c yv youtube-viewer -C'
 alias ytmp3='youtube-dl --extract-audio --audio-format mp3 --prefer-ffmpeg'
-#alias newsbeuter='abduco -c news newsbeuter'
 
 ################
 #packagemanager#
 ################
 
 #gentoo-emerge
-#alias update1='emerge --ask --update --ask @world'
-#alias update2='emerge --ask --update --deep @world'
-#alias update3='emerge --ask --update --deep --with-bdeps=y @world'
-#alias update4='sudo emerge --verbose --ask --update --deep --with-bdeps=y --newuse @world'
+alias update1='sudo emerge --ask --update --ask @world'
+alias update2='sudo emerge --ask --update --deep @world'
+alias update3='sudo emerge --ask --update --deep --with-bdeps=y @world'
+alias update4='sudo emerge --verbose --ask --update --deep --with-bdeps=y --newuse @world'
 #equery
-#alias eqf='equery f'
-#alias equ='equery u'
-#alias eqh='equery h'
-#alias eqa='equery a'
-#alias eqb='equery b'
-#alias eql='equery l'
-#alias eqd='equery d'
-#alias eqg='equery g'
-#alias eqc='equery c'
-#alias eqk='equery k'
-#alias eqm='equery m'
-#alias eqy='equery y'
-#alias eqs='equery s'
-#alias eqw='equery w'
+alias eqf='equery f'
+alias equ='equery u'
+alias eqh='equery h'
+alias eqa='equery a'
+alias eqb='equery b'
+alias eql='equery l'
+alias eqd='equery d'
+alias eqg='equery g'
+alias eqc='equery c'
+alias eqk='equery k'
+alias eqm='equery m'
+alias eqy='equery y'
+alias eqs='equery s'
+alias eqw='equery w'
 
 #functions
 function ls(){
@@ -243,7 +244,7 @@ function remove() {
 }
 
 function vman() {
-    /usr/local/bin/vim -c "SuperMan $*"
+    /usr/bin/vim-normal -c "SuperMan $*"
 
     if [ "$?" != "0"  ]; then
         echo "No manual entry for $*"
@@ -256,7 +257,7 @@ function vol() {
 
 function rm() {
 	if [[ -a /usr/bin/trash ]]; then
-		trash -v $@
+		trash-put -v $@
 	elif [[ -a /usr/local/bin/trash ]]; then
 		trash -v $@
 	else 
@@ -265,7 +266,7 @@ function rm() {
 }
 
 function zathura() {
-	/usr/local/bin/zathura $@ &
+	/usr//bin/zathura $@ &
 }
 
 function google () {
@@ -313,6 +314,16 @@ function trestart() {
 	tmuxinator stop $@
 	tmuxinator start $@
 }
+
+ranger() {
+    if [ -z "$RANGER_LEVEL" ]; then
+        /usr/bin/ranger "$@"
+    else
+        exit
+    fi
+}
+
+histrm() { LC_ALL=C sed --in-place '/$1/d' $HISTFILE }
 
 fzf-surfraw() { surfraw "$(cat ~/.config/surfraw/bookmarks | sed '/^$/d' | sort -n | fzf -e)" ;}
 
