@@ -14,7 +14,7 @@ setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_FIND_NO_DUPS
 setopt HIST_SAVE_NO_DUPS
 
-ZSH_THEME="spaceship"
+ZSH_THEME="powerlevel9k/powerlevel9k"
 SPACESHIP_PROMPT_ORDER=(
 	user
 	host
@@ -28,22 +28,26 @@ SPACESHIP_PROMPT_ORDER=(
 )
 
 SPACESHIP_PROMPT_ADD_NEWLINE=true
-SPACESHIP_EXEC_TIME_SHOW=false
+SPACESHIP_EXEC_TIME_SHOW=true
 SPACESHIP_EXEC_TIME_ELAPSED=240
 SPACESHIP_PROMPT_SEPARATE_LINE=true
 
-#POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
-#POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs)
-#POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=5
-#POWERLEVEL9K_COMMAND_EXECUTION_TIME_PRECISION=1
-#POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
-#POWERLEVEL9K_DIR_HOME_BACKGROUND='002'
-#POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND='010'
-#POWERLEVEL9K_DIR_HOME_DEFAULT_BACKGROUND='160'
-#POWERLEVEL9K_SHORTEN_STRATEGY=truncate_from_right
-#POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+POWERLEVEL9K_MODE="nerdfont-complete"
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(root_indicator background_jobs battery)
+POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=5
+POWERLEVEL9K_COMMAND_EXECUTION_TIME_PRECISION=1
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
+POWERLEVEL9K_DIR_HOME_BACKGROUND='002'
+POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND='010'
+POWERLEVEL9K_DIR_HOME_DEFAULT_BACKGROUND='160'
+POWERLEVEL9K_SHORTEN_STRATEGY=truncate_from_right
+POWERLEVEL9K_PROMPT_ON_NEWLINE=false
+POWERLEVEL9K_BATTERY_VERBOSE=false
+POWERLEVEL9K_BATTERY_STAGES=""
+POWERLEVEL9K_DIR_SHOW_WRITABLE=true
 
-plugins=(sudo cp colorize\
+plugins=(sudo cp autosuggestions colorize\
 	copyfile fast-syntax-highlighting)
 #ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 #ZSH_AUTOSUGGEST_USE_ASYNC=1
@@ -51,12 +55,12 @@ plugins=(sudo cp colorize\
 
 export PATH="usr/local/sbin:/usr/local/bin:/bin:/usr/bin:/usr/sbin:/bin:/sbin"
 export PATH=$PATH:$HOME/bin
-export PATH=$PATH:/opt/void-packages
+#export PATH=$PATH:/opt/void-packages
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --no-messages --glob "!.git/*"'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd -H -t d ."
 #export FZF_ALT_C_COMMAND="bfs -type d -nowarn 2> /dev/null"
-export FZF_DEFAULT_OPTS='--bind tab:down,shift-tab:up'
+export FZF_DEFAULT_OPTS='--bind tab:down,shift-tab:up,ctrl-j:down,ctrl-k:up'
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 export UPDATE_ZSH_DAYS=5
@@ -66,7 +70,7 @@ export NO_AT_BRIDGE=1
 if [[ -n $SSH_CONNECTION ]]; then
 	export EDITOR='vim'
 else
-	export EDITOR='vim'
+	export EDITOR='nvim'
 fi
 
 # ssh
@@ -91,6 +95,8 @@ source $ZSH/oh-my-zsh.sh
 #########
 #helpers#
 #########
+alias ff='fzfmenu'
+alias fp='fzf_power'
 alias ss='eval `slmenu < ~/.progs.txt`'
 alias tpeon='sudo sysctl -w kernel.grsecurity.tpe=1'
 alias tpeoff='sudo sysctl -w kernel.grsecurity.tpe=0'
@@ -124,6 +130,7 @@ if [[ -a /usr/bin/pkg_add ]]; then
 	alias sudo='doas'
 fi
 alias sudo='sudo '
+#alias sudoedit='sudo -E nvim'
 alias free='free -h'
 alias df='df -h'
 #alias scan='sudo wifi-menu'
@@ -190,6 +197,7 @@ alias eqy='equery y'
 alias eqs='equery s'
 alias eqw='equery w'
 
+alias genlop='doas genlop'
 #functions
 function ls(){
 	if [[ -a /usr/local/bin/gls ]]; then
@@ -244,7 +252,7 @@ function remove() {
 }
 
 function vman() {
-    /usr/bin/vim-normal -c "SuperMan $*"
+    /usr/bin/vim -c "SuperMan $*"
 
     if [ "$?" != "0"  ]; then
         echo "No manual entry for $*"
@@ -266,7 +274,7 @@ function rm() {
 }
 
 function zathura() {
-	/usr//bin/zathura $@ &
+	/usr/bin/zathura $@ &
 }
 
 function google () {
@@ -333,4 +341,3 @@ source "/home/${USER}/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
 if [[ -a /bin/xbps-install ]]; then
     . /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
-

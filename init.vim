@@ -24,7 +24,7 @@ Plug 'w0rp/ale'
 Plug 'wellle/targets.vim'
 Plug 'zchee/deoplete-clang',{ 'for': ['c', 'cpp'] }
 Plug 'junegunn/fzf.vim'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'airblade/vim-rooter'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'takac/vim-hardtime'
@@ -215,7 +215,7 @@ let g:deoplete#auto_complete_delay = 25
 "use tab key
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 "deoplete-clang
-let g:deoplete#sources#clang#libclang_path = '/usr/lib/llvm/5/lib64/libclang.so'
+let g:deoplete#sources#clang#libclang_path = '/usr/lib/llvm/4/lib64/libclang.so'
 let g:deoplete#sources#clang#clang_header = '/usr/lib/clang/'
 
 let g:NERDSpaceDelims = 1
