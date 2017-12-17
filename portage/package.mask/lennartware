@@ -1,7 +1,0 @@
-app-accessibility/at-spi2-atk
-app-accessibility/at-spi2-core
-#sys-apps/dbus
-sys-auth/polkit
-sys-auth/consolekit
-media-sound/pulseaudio
-sys-apps/systemd

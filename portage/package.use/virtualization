@@ -1,4 +1,0 @@
-app-emulation/qemu -sasl
-net-misc/spice-gtk usbredir gtk3
-net-libs/gtk-vnc python gtk3
-app-emulation/virt-manager gtk debug

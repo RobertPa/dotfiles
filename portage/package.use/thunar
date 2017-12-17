@@ -1,1 +1,0 @@
-xfce-base/thunar -dbus -debug exif -libnotify -pcre -udisks -xfce_plugins_trash

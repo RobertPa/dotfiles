@@ -1,1 +1,0 @@
-www-client/firefox -bindist -custom-cflags -custom-optimization -dbus -debug hardened -hwaccel -jack nsplugin -pulseaudio -startup-notification gmp-autoupdate
