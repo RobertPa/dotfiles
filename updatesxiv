@@ -1,0 +1,12 @@
+#!/bin/sh
+
+cd /usr/ports/graphics/sxiv
+make deinstall && make clean=all
+make extract; make patch
+cd /usr/ports/pobj/sxi*
+cp /home/user/Downloads/dotfiles/sxiv/sxiv_patch.patch ./
+cd sxiv-1.*
+patch -p1 <../sxiv_patch.patch 
+cp /home/user/Downloads/dotfiles/sxiv/config.h ./
+cd /usr/ports/graphics/sxiv; make install
+
